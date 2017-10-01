@@ -17,8 +17,6 @@ public class Grafo {
         this.aresta = aresta;
     }
     
-    
-
     public ArrayList<Node> getNode() {
         return node;
     }

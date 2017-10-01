@@ -1,5 +1,9 @@
 <aresta>
-  <source>a</source>
-  <target>b</target>
-  <idaVolta>false</idaVolta>
+  <source>
+    <nome>B</nome>
+  </source>
+  <target>
+    <nome>C</nome>
+  </target>
+  <idaVolta>true</idaVolta>
 </aresta>

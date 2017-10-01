@@ -3,26 +3,27 @@
  * @author straby
  */
 public class Aresta {       
-    private String source;
-    private String target;
+    private Node source;
+    private Node target;
     private boolean idaVolta;
+    
     
     public Aresta() {
     }
 
-    public String getSource() {
+    public Node getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(Node source) {
         this.source = source;
     }
 
-    public String getTarget() {
+    public Node getTarget() {
         return target;
     }
 
-    public void setTarget(String target) {
+    public void setTarget(Node target) {
         this.target = target;
     }
 

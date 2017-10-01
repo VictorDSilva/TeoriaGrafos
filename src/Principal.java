@@ -15,31 +15,31 @@ public class Principal {
 
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
+        
+        Node no1 = new Node("A");
+        Node no2 = new Node("B");
+        Node no3 = new Node("C");
+
+        Aresta aresta1 = new Aresta();
+        Aresta aresta2 = new Aresta();
+        
+        aresta1.setSource(no1);
+        aresta1.setTarget(no3);
+        aresta2.setSource(no2);
+        aresta2.setTarget(no3);
+        
         ArrayList<Node> nos = new ArrayList();
         ArrayList<Aresta> arestas = new ArrayList();
+        
+        Grafo grafo = new Grafo(nos,arestas);
+        
+        aresta2.setIdaVolta(true);
+        
+        //funcaoXML(aresta1);
+        funcaoXML(aresta2);
+    }
 
-        System.out.println("Digite as informacoes");
-        Node node = new Node();
-        Node node2 = new Node();
-
-        System.out.print("Nome Node 1: ");
-        String nome = entrada.next();
-        node.setId(nome);
-
-        System.out.print("Nome Node 2: ");
-        nome = entrada.next();
-        node2.setId(nome);
-
-        Aresta aresta = new Aresta();
-        aresta.setSource(node.getId());
-        aresta.setTarget(node2.getId());
-
-        nos.add(node);
-        nos.add(node2);
-        arestas.add(aresta);
-
-        System.out.println("Aresta " + aresta.getSource() + aresta.getTarget());
-
+    public static void funcaoXML(Aresta aresta) {
         XStream xml = new XStream(new DomDriver());
         xml.alias("no", Node.class);
         xml.alias("aresta", Aresta.class);
@@ -51,7 +51,6 @@ public class Principal {
         } catch (IOException ex) {
             System.out.println("Erro ao criar o arquivo");
         }
-              
     }
 
 }
