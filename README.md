@@ -1,5 +1,8 @@
 # TeoriaGrafos
 
-Projeto da Disciplina Teoria dos Grafos 
-Linguagem: Java
-Grupo: Victor Domingos, Pedro Dode, Jonas Gomes
+<h2>Projeto da Disciplina - Teoria dos Grafos </h2>
+<h3>Linguagem: Java</h3>
+<h2>Grupo: </h2>
+<ul><li>Victor Domingos </li>
+  <li>Pedro Dode</li>
+  <li>Jonas Gomes</li></ul>
