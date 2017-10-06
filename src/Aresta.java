@@ -1,30 +1,40 @@
+
 /**
  *
  * @author straby
  */
-public class Aresta {       
-    private Node source;
-    private Node target;
+public class Aresta {
+
+    private Vertice origem;
+    private Vertice destino;
     private boolean idaVolta;
+
+    public Aresta(Vertice origem, Vertice destino) {
+        this.origem = origem;
+        this.destino = destino;
+    }
+
     
+    public Aresta(Vertice origem, Vertice destino, boolean idaVolta) {
+        this.origem = origem;
+        this.destino = destino;
+        this.idaVolta = idaVolta;
+    }
     
-    public Aresta() {
+    public Vertice getOrigem() {
+        return origem;
     }
 
-    public Node getSource() {
-        return source;
+    public void setOrigem(Vertice origem) {
+        this.origem = origem;
     }
 
-    public void setSource(Node source) {
-        this.source = source;
+    public Vertice getDestino() {
+        return destino;
     }
 
-    public Node getTarget() {
-        return target;
-    }
-
-    public void setTarget(Node target) {
-        this.target = target;
+    public void setDestino(Vertice destino) {
+        this.destino = destino;
     }
 
     public boolean isIdaVolta() {

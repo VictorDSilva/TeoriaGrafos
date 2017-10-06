@@ -1,56 +1,75 @@
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  *
- * @author straby
+ * @author straby as Jonas Gomes (github.com/blackstraby) 
+ *
  */
 public class Principal {
 
-    public static void main(String[] args) {
-        Scanner entrada = new Scanner(System.in);
-        
-        Node no1 = new Node("A");
-        Node no2 = new Node("B");
-        Node no3 = new Node("C");
+    static Scanner ler = new Scanner(System.in);
 
-        Aresta aresta1 = new Aresta();
-        Aresta aresta2 = new Aresta();
-        
-        aresta1.setSource(no1);
-        aresta1.setTarget(no3);
-        aresta2.setSource(no2);
-        aresta2.setTarget(no3);
-        
-        ArrayList<Node> nos = new ArrayList();
-        ArrayList<Aresta> arestas = new ArrayList();
-        
-        Grafo grafo = new Grafo(nos,arestas);
-        
-        aresta2.setIdaVolta(true);
-        
-        //funcaoXML(aresta1);
-        funcaoXML(aresta2);
+    public static void main(String[] args) {
+        Grafo grafo = new Grafo();
+
+        if (grafo.getVertices().isEmpty()) {
+            System.out.println("Nao existem vertices!");
+        }
+
+        Vertice A = grafo.addVertice("A");
+        Vertice B = grafo.addVertice("B");
+        System.out.println(listaVertice(grafo));
+
+        System.out.print("Digite o nome do vertice: ");
+        Vertice vertice = grafo.addVertice(ler.next());
+
+        if (grafo.getVertices().size() > 0) {
+
+            System.out.print("Quer ligar o vertice " + vertice.getNome() + " com: ");
+            String origem = ler.next();
+            System.out.print("E ida e volta? [0 u 1]: ");
+            int idaVolta = ler.nextInt();
+
+            for (Vertice v : grafo.getVertices()) {
+                if (v.getNome() == null ? origem == null : v.getNome().equals(origem)) {
+                    Aresta origDestin = grafo.addAresta(vertice, v, (idaVolta == 1 ? true:false));
+                }
+            }
+
+            Aresta AB = grafo.addAresta(A, B, true);
+
+            System.out.println("Grafo: ");
+            System.out.println(grafo);
+
+        }
+
     }
 
-    public static void funcaoXML(Aresta aresta) {
-        XStream xml = new XStream(new DomDriver());
-        xml.alias("no", Node.class);
-        xml.alias("aresta", Aresta.class);
+    public static int geraMenu() {
+        int opcao = 0;
 
-        File xmlFile = new File("nos.xml");
-        try {
-            xml.toXML(aresta, new FileWriter(xmlFile));
-            System.out.println("Arquivo Criado");
-        } catch (IOException ex) {
-            System.out.println("Erro ao criar o arquivo");
+        System.out.println("************************");
+        System.out.println("1 - Adicionar Vértice");
+        System.out.println("2 - Adicionar Aresta");
+        System.out.println("3 - Ver Grafo");
+        System.out.println("0 - Sair do programa");
+        System.out.println("************************");
+        System.out.print("Escolha uma opção: ");
+
+        opcao = ler.nextInt();
+        return opcao;
+    }
+
+    public static String listaVertice(Grafo grafo) {
+
+        String r = "";
+
+        for (Vertice u : grafo.getVertices()) {
+            r += u.getNome();
+            r += "\n";
         }
+        return r;
     }
 
 }
