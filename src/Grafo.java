@@ -32,12 +32,13 @@ public class Grafo {
         this.arestas = arestas;
     }
 
-    public Vertice addVertice(String nome) {
-        Vertice v = new Vertice(nome);
+    public Vertice addVertice(int id) {
+        Vertice v = new Vertice(id);
         this.vertices.add(v);
         return v;
     }
 
+    //Remover futuramente
     public Aresta addAresta(Vertice origem, Vertice destino) {
         Aresta e = new Aresta(origem, destino);
         origem.addAdj(e);
@@ -45,6 +46,7 @@ public class Grafo {
         return e;
     }
 
+    //Nova implementacao do metodo
     public Aresta addAresta(Vertice origem, Vertice destino, boolean idaVolta) {
         if (idaVolta == true) {
             Aresta e = new Aresta(origem, destino, idaVolta);
@@ -60,10 +62,10 @@ public class Grafo {
         }
     }
 
-    public Vertice buscaVertice(String nome) {
+    public Vertice buscaVertice(int id) {
         for (Vertice u : this.vertices) {
-            if (u.getNome() == nome) {
-                System.out.println("Mesmo nome " + nome);
+            if (u.getId() == id) {
+                System.out.println("Mesmo nome " + id);
                 return u;
             } else {
                 return null;
@@ -77,15 +79,38 @@ public class Grafo {
         String r = "";
 
         for (Vertice u : this.vertices) {
-            r += u.getNome() + " -> ";
+            r += u.getId() + " -> ";
 
             for (Aresta e : u.getAdj()) {
                 Vertice v = e.getDestino();
-                r += v.getNome() + ", ";
+                r += v.getId() + ", ";
             }
             r += "\n";
         }
         return r;
     }
 
+    public void criarVertice(int qt) {
+        for (int i = 0; i < qt; i++) {
+            Vertice v = this.addVertice(i);
+        }
+    }
+
+    public void criarAresta(int idOrigem, int idDestino) {
+        if (this.getVertices().isEmpty()) {
+            System.out.println("Nao existem vertices");
+        } else {
+            Aresta aresta = this.addAresta(this.getVertices().get(idOrigem),
+                    this.getVertices().get(idDestino));
+        }
+    }
+
+    public String listarVertice() {
+        String r = "";
+        for (Vertice u : this.getVertices()) {
+            r += "V: " + u.getId();
+            r += "\n";
+        }
+        return r;
+    }
 }
