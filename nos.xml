@@ -1,0 +1,25 @@
+<Grafo>
+  <node>
+    <no>
+      <nome>A</nome>
+    </no>
+    <no>
+      <nome>B</nome>
+    </no>
+    <no>
+      <nome>C</nome>
+    </no>
+  </node>
+  <aresta>
+    <aresta>
+      <source reference="../../../node/no"/>
+      <target reference="../../../node/no[3]"/>
+      <idaVolta>false</idaVolta>
+    </aresta>
+    <aresta>
+      <source reference="../../../node/no[2]"/>
+      <target reference="../../../node/no[3]"/>
+      <idaVolta>true</idaVolta>
+    </aresta>
+  </aresta>
+</Grafo>
