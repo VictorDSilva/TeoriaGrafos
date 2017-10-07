@@ -1,4 +1,7 @@
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,5 +115,35 @@ public class Grafo {
             r += "\n";
         }
         return r;
+    }
+
+    public void gravarXML() {
+        try {
+            FileWriter arquivo = new FileWriter("grafo.xml");
+            PrintWriter gravarArquivo = new PrintWriter(arquivo);
+
+            gravarArquivo.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            gravarArquivo.printf("<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"  \n"
+                    + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+                    + "    xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n"
+                    + "     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n");
+
+            gravarArquivo.printf("  <graph id='1' edgedefault='direcao'>\n");
+
+            for (Vertice v : this.getVertices()) {
+                gravarArquivo.printf("      <node id='" + v.getId() + "'/>\n");
+            }
+
+            for (Aresta aresta : this.getArestas()) {
+                gravarArquivo.printf("      <edge source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
+            }
+
+            gravarArquivo.printf("  </graph>\n");
+            gravarArquivo.printf("</graphml>");
+
+            arquivo.close();
+        } catch (IOException ex) {
+            System.out.println("Erro ao gerar XML!");
+        }
     }
 }

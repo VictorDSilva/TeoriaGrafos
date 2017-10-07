@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Scanner;
  */
 public class GeradorMenu {
 
-    public static String geraMenu() {
+    public static String geraMenu(){
         Scanner ler = new Scanner(System.in);
 
         Grafo grafo = new Grafo();
@@ -36,7 +37,7 @@ public class GeradorMenu {
                     System.out.println(grafo.listarVertice());
                     System.out.println("Digite a quantidade de arestas: ");
                     int qt = ler.nextInt();
-                    
+
                     for (int i = 0; i < qt; i++) {
                         System.out.print("Escolha um vertice de Origem: ");
                         int origem = ler.nextInt();
@@ -59,6 +60,7 @@ public class GeradorMenu {
                     break;
                 case "6":
                     //gravar xml
+                    grafo.gravarXML();
                     break;
                 case "0":
                     System.out.println("Saindo do programa...");
