@@ -1,4 +1,6 @@
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ public class Grafo {
 
     private List<Vertice> vertices;
     private List<Aresta> arestas;
+    
 
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
@@ -144,6 +147,17 @@ public class Grafo {
             arquivo.close();
         } catch (IOException ex) {
             System.out.println("Erro ao gerar XML!");
+        }
+    }
+
+    public void lerXML() {
+        try {
+            BufferedReader arquivo = new BufferedReader(new FileReader("grafo.xml"));
+
+            System.out.println(Grafo.this);
+
+        } catch (IOException ex) {
+            System.out.println("Erro ao ler XML!");
         }
     }
 }
