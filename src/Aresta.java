@@ -10,6 +10,10 @@ public class Aresta {
     private boolean idaVolta;
 
     public Aresta(Vertice origem, Vertice destino) {
+<<<<<<< HEAD
+=======
+        
+>>>>>>> e567f4f0a7c76d25411caa31568a621cad793fce
         this.origem = origem;
         this.destino = destino;
     }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 import java.util.Scanner;
 
@@ -73,3 +74,16 @@ public class Principal {
     }
 
 }
+=======
+/**
+ *
+ * @author straby as Jonas Gomes (github.com/blackstraby)
+ *
+ */
+public class Principal {
+    public static void main(String[] args) {
+        GeradorMenu.geraMenu();
+    }
+
+}
+>>>>>>> e567f4f0a7c76d25411caa31568a621cad793fce
