@@ -56,6 +56,7 @@ public class GeradorMenu {
                     break;
                 case "5":
                     //ler xml
+                    grafo.lerXML();
                     break;
                 case "6":
                     //gravar xml
