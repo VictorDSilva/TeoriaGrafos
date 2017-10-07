@@ -8,28 +8,28 @@ import java.util.List;
  */
 public class Vertice {
 
-    private String nome;
+    private int id;
     private List<Aresta> adj;
 
-    Vertice(String nome) {
-        this.nome = nome;
+    Vertice(int id) {
+        this.id = id;
         this.adj = new ArrayList<Aresta>();
     }
 
     public Vertice() {
-    
-    }    
 
-    void addAdj(Aresta e) {
+    }
+
+    void addAdj(Aresta e) {//add aresta Adjacente
         adj.add(e);
     }
 
-    public String getNome() {
-        return nome;
+    public int getId() {
+        return id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Aresta> getAdj() {
@@ -39,6 +39,5 @@ public class Vertice {
     public void setAdj(List<Aresta> adj) {
         this.adj = adj;
     }
-
 
 }
