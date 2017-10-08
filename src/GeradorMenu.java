@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public class GeradorMenu {
 
-    public static String geraMenu(){
+    public static String geraMenu() {
         Scanner ler = new Scanner(System.in);
 
         Grafo grafo = new Grafo();
@@ -55,8 +55,21 @@ public class GeradorMenu {
                     System.out.println(grafo);
                     break;
                 case "5":
-                    //ler xml
-                    grafo.lerXML();
+                    Boolean menu = true;
+                    Scanner input = new Scanner(System.in);
+                    System.out.print("Qual o caminho do banco de palavras que deseja utilizar?: ");
+
+                    do {
+                        try {
+                            grafo.lerXML(input.nextLine());
+                            menu = false;
+
+                        } catch (Exception ex) {
+                            System.out.print("Banco não encontrado, tente novamente: ");
+                        }
+
+                    } while (menu);
+                    //grafo.lerXML();
                     break;
                 case "6":
                     //gravar xml

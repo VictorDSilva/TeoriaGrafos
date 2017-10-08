@@ -15,7 +15,6 @@ public class Grafo {
 
     private List<Vertice> vertices;
     private List<Aresta> arestas;
-    
 
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
@@ -150,12 +149,13 @@ public class Grafo {
         }
     }
 
-    public void lerXML() {
+    public void lerXML(String caminhoArquivo) {
         try {
-            BufferedReader arquivo = new BufferedReader(new FileReader("grafo.xml"));
+            BufferedReader arquivo = new BufferedReader(new FileReader(caminhoArquivo));
 
-            System.out.println(Grafo.this);
-
+            while (arquivo.ready()) {
+                System.out.println(arquivo.readLine());
+            }
         } catch (IOException ex) {
             System.out.println("Erro ao ler XML!");
         }
