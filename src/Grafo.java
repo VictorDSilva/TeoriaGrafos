@@ -15,6 +15,15 @@ public class Grafo {
 
     private List<Vertice> vertices;
     private List<Aresta> arestas;
+    private boolean ordenacao;
+
+    public boolean isOrdenacao() {
+        return ordenacao;
+    }
+
+    public void setOrdenacao(boolean ordenacao) {
+        this.ordenacao = ordenacao;
+    }
 
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
@@ -159,5 +168,46 @@ public class Grafo {
         } catch (IOException ex) {
             System.out.println("Erro ao ler XML!");
         }
+    }
+
+    public void infoGrafo() {
+
+        System.out.println(" A ordem do grafo é: " + getVertices().size());
+
+        for (int i = 0; i <= getArestas().size() - 1; i++) {
+            System.out.println("Os vertices: " + getArestas().get(i).getOrigem() + " e " + getArestas().get(i).getDestino() + " são incidentes a aresta: " + getArestas().get(i).getNome());
+        }
+
+        int x = 0;
+        int y = 0;
+        if (isOrdenacao()) {
+            for (int i = 0; i <= getVertices().size() - 1; i++) {
+                int vertice = getVertices().get(i).getId();
+                for (int j = 0; j <= getArestas().size() - 1; j++) {
+                    if (vertice.equals(getArestas().get(j).getOrigem()) || vertice.equals(getArestas().get(j).getDestino())) {
+                        x++;
+                    }
+                }
+                System.out.println("Vertice: " + getVertices().get(i).getId() + ": " + x);
+                x = 0;
+            }
+        } else {
+            for (int i = 0; i <= getVertices().size() - 1; i++) {
+                int vertice = getVertices().get(i).getId();
+                for (int j = 0; j <= getArestas().size() - 1; j++) {
+                    if (vertice.equals(getArestas().get(i).getOrigem())) {
+                        x++;
+                    }
+                    if (vertice.equals(getArestas().get(j).getDestino())) {
+                        y++;
+                    }
+                }
+                System.out.println("Vertice: " + getVertices().get(i).getId() + " Grau de Emissão: " + x);
+                System.out.println("Vertice: " + getVertices().get(i).getId() + " Grau de Recepção: " + y);
+                x = 0;
+                y = 0;
+            }
+        }
+
     }
 }
