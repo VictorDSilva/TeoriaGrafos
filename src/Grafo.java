@@ -16,6 +16,7 @@ public class Grafo {
     private List<Vertice> vertices;
     private List<Aresta> arestas;
     private boolean ordenacao;
+    private String id;
 
     public boolean isOrdenacao() {
         return ordenacao;
@@ -170,44 +171,50 @@ public class Grafo {
         }
     }
 
-    public void infoGrafo() {
-
+    public void getOrdem() {
         System.out.println(" A ordem do grafo é: " + getVertices().size());
+    }
+    
 
+    public void getIncidencia() {
         for (int i = 0; i <= getArestas().size() - 1; i++) {
             System.out.println("Os vertices: " + getArestas().get(i).getOrigem() + " e " + getArestas().get(i).getDestino() + " são incidentes a aresta: " + getArestas().get(i).getNome());
         }
-
-        int x = 0;
-        int y = 0;
-        if (isOrdenacao()) {
-            for (int i = 0; i <= getVertices().size() - 1; i++) {
-                int vertice = getVertices().get(i).getId();
-                for (int j = 0; j <= getArestas().size() - 1; j++) {
-                    if (vertice.equals(getArestas().get(j).getOrigem()) || vertice.equals(getArestas().get(j).getDestino())) {
-                        x++;
-                    }
+    }
+    
+    public void grauVertice() {
+        int cont;
+        for (Vertice v : this.vertices) {
+            cont = 0;
+            for (int i = 0; i < arestas.size(); i++) {
+                if (arestas.get(i).getOrigem() == v) {
+                    cont++;
                 }
-                System.out.println("Vertice: " + getVertices().get(i).getId() + ": " + x);
-                x = 0;
+                if (arestas.get(i).getDestino() == v) {
+                    cont++;
+                }
             }
-        } else {
-            for (int i = 0; i <= getVertices().size() - 1; i++) {
-                int vertice = getVertices().get(i).getId();
-                for (int j = 0; j <= getArestas().size() - 1; j++) {
-                    if (vertice.equals(getArestas().get(i).getOrigem())) {
-                        x++;
-                    }
-                    if (vertice.equals(getArestas().get(j).getDestino())) {
-                        y++;
-                    }
-                }
-                System.out.println("Vertice: " + getVertices().get(i).getId() + " Grau de Emissão: " + x);
-                System.out.println("Vertice: " + getVertices().get(i).getId() + " Grau de Recepção: " + y);
-                x = 0;
-                y = 0;
+            System.out.println(v.getId() + " tem grau: " + cont);
+        }
+    }
+    
+     public boolean verificaVerticeFonte(Vertice vertice) {
+        for (Aresta arestas : arestas) {
+            if (arestas.getOrigem() == vertice) {
+                return false;
             }
         }
+        return true;
+    }
 
+    public boolean verificaVerticeSumidouro(Vertice vertice) {
+        for (Aresta arestas : arestas) {
+            if (arestas.getOrigem() == vertice) {
+                return false;
+            }
+        }
+        return true;
     }
 }
+
+
