@@ -15,20 +15,35 @@ public class Grafo {
 
     private List<Vertice> vertices;
     private List<Aresta> arestas;
-    private boolean ordenacao;
+    private boolean orientado;
     private String id;
-
-    public boolean isOrdenacao() {
-        return ordenacao;
-    }
-
-    public void setOrdenacao(boolean ordenacao) {
-        this.ordenacao = ordenacao;
-    }
 
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
+        
+    }
+
+    public Grafo(boolean orientado) {
+        this.vertices = new ArrayList<Vertice>();
+        this.arestas = new ArrayList<Aresta>();
+        this.orientado = orientado;
+    }
+
+    public boolean isOrientado() {
+        return orientado;
+    }
+
+    public void setOrientado(boolean orientado) {
+        this.orientado = orientado;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public List<Vertice> getVertices() {
@@ -47,30 +62,24 @@ public class Grafo {
         this.arestas = arestas;
     }
 
+    
+    /* METODOS DE MANIPULACAO DO GRAFO */
+    
     public Vertice addVertice(int id) {
         Vertice v = new Vertice(id);
         this.vertices.add(v);
         return v;
     }
 
-    //Remover futuramente
-    public Aresta addAresta(Vertice origem, Vertice destino) {
-        Aresta e = new Aresta(origem, destino);
-        origem.addAdj(e);
-        this.arestas.add(e);
-        return e;
-    }
-
-    //Nova implementacao do metodo
-    public Aresta addAresta(Vertice origem, Vertice destino, boolean idaVolta) {
-        if (idaVolta == true) {
-            Aresta e = new Aresta(origem, destino, idaVolta);
+    public Aresta addAresta(String nome, Vertice origem, Vertice destino) {
+        if (this.isOrientado()) {
+            Aresta e = new Aresta(nome, origem, destino);
             origem.addAdj(e);
-            this.addAresta(destino, origem);
+            destino.addAdj(e);
             this.arestas.add(e);
             return e;
         } else {
-            Aresta e = new Aresta(origem, destino, idaVolta);
+            Aresta e = new Aresta(nome, origem, destino);
             origem.addAdj(e);
             this.arestas.add(e);
             return e;
@@ -111,11 +120,11 @@ public class Grafo {
         }
     }
 
-    public void criarAresta(int idOrigem, int idDestino) {
+    public void criarAresta(String nome, int idOrigem, int idDestino) {
         if (this.getVertices().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {
-            Aresta aresta = this.addAresta(this.getVertices().get(idOrigem),
+            Aresta aresta = this.addAresta(nome, this.getVertices().get(idOrigem),
                     this.getVertices().get(idDestino));
         }
     }
@@ -174,14 +183,13 @@ public class Grafo {
     public void getOrdem() {
         System.out.println(" A ordem do grafo é: " + getVertices().size());
     }
-    
 
     public void getIncidencia() {
         for (int i = 0; i <= getArestas().size() - 1; i++) {
             System.out.println("Os vertices: " + getArestas().get(i).getOrigem() + " e " + getArestas().get(i).getDestino() + " são incidentes a aresta: " + getArestas().get(i).getNome());
         }
     }
-    
+
     public void grauVertice() {
         int cont;
         for (Vertice v : this.vertices) {
@@ -197,8 +205,8 @@ public class Grafo {
             System.out.println(v.getId() + " tem grau: " + cont);
         }
     }
-    
-     public boolean verificaVerticeFonte(Vertice vertice) {
+
+    public boolean verificaVerticeFonte(Vertice vertice) {
         for (Aresta arestas : arestas) {
             if (arestas.getOrigem() == vertice) {
                 return false;
@@ -216,5 +224,3 @@ public class Grafo {
         return true;
     }
 }
-
-

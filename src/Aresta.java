@@ -8,23 +8,13 @@ public class Aresta {
     private String nome;
     private Vertice origem;
     private Vertice destino;
-    private boolean idaVolta;
 
-    public Aresta(Vertice origem, Vertice destino) {
-        
-        this.origem = origem;
-        this.destino = destino;
+    public Aresta(String nome, Vertice origem, Vertice destino) {
         this.nome = nome;
-    }
-
-    
-    public Aresta(Vertice origem, Vertice destino, boolean idaVolta) {
         this.origem = origem;
         this.destino = destino;
-        this.idaVolta = idaVolta;
-        
     }
-    
+
     public Vertice getOrigem() {
         return origem;
     }
@@ -41,14 +31,6 @@ public class Aresta {
         this.destino = destino;
     }
 
-    public boolean isIdaVolta() {
-        return idaVolta;
-    }
-
-    public void setIdaVolta(boolean idaVolta) {
-        this.idaVolta = idaVolta;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -56,6 +38,5 @@ public class Aresta {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
     
 }
