@@ -14,6 +14,13 @@ public class Aresta {
         this.origem = origem;
         this.destino = destino;
     }
+    
+    
+    public Aresta(Vertice origem, Vertice destino) {       
+        this.origem = origem;
+        this.destino = destino;
+    }
+
 
     public Vertice getOrigem() {
         return origem;

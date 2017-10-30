@@ -71,15 +71,15 @@ public class Grafo {
         return v;
     }
 
-    public Aresta addAresta(String nome, Vertice origem, Vertice destino) {
+    public Aresta addAresta(Vertice origem, Vertice destino) {
         if (this.isOrientado()) {
-            Aresta e = new Aresta(nome, origem, destino);
+            Aresta e = new Aresta(origem, destino);
             origem.addAdj(e);
             destino.addAdj(e);
             this.arestas.add(e);
             return e;
         } else {
-            Aresta e = new Aresta(nome, origem, destino);
+            Aresta e = new Aresta(origem, destino);
             origem.addAdj(e);
             this.arestas.add(e);
             return e;
@@ -120,11 +120,11 @@ public class Grafo {
         }
     }
 
-    public void criarAresta(String nome, int idOrigem, int idDestino) {
+    public void criarAresta(int idOrigem, int idDestino) {
         if (this.getVertices().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {
-            Aresta aresta = this.addAresta(nome, this.getVertices().get(idOrigem),
+            Aresta aresta = this.addAresta(this.getVertices().get(idOrigem),
                     this.getVertices().get(idDestino));
         }
     }
