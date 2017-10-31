@@ -21,7 +21,7 @@ public class Grafo {
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
-        
+
     }
 
     public Grafo(boolean orientado) {
@@ -62,9 +62,7 @@ public class Grafo {
         this.arestas = arestas;
     }
 
-    
     /* METODOS DE MANIPULACAO DO GRAFO */
-    
     public Vertice addVertice(int id) {
         Vertice v = new Vertice(id);
         this.vertices.add(v);
@@ -190,7 +188,21 @@ public class Grafo {
         }
     }
 
-    public void grauVertice() {
+    public void grauRecepcao() {
+        int cont;
+        for (Vertice v : this.vertices) {
+            cont = 0;
+            for (int i = 0; i < arestas.size(); i++) {
+
+                if (arestas.get(i).getDestino() == v) {
+                    cont++;
+                }
+            }
+            System.out.println(v.getId() + " tem grau de recepção: " + cont);
+        }
+    }
+
+    public void grauEmissao() {
         int cont;
         for (Vertice v : this.vertices) {
             cont = 0;
@@ -198,29 +210,29 @@ public class Grafo {
                 if (arestas.get(i).getOrigem() == v) {
                     cont++;
                 }
-                if (arestas.get(i).getDestino() == v) {
-                    cont++;
-                }
+                
             }
-            System.out.println(v.getId() + " tem grau: " + cont);
+            System.out.println(v.getId() + " tem grau de emissão: " + cont);
         }
     }
 
-    public boolean verificaVerticeFonte(Vertice vertice) {
+    public void getFonte(int id) {
+
         for (Aresta arestas : arestas) {
-            if (arestas.getOrigem() == vertice) {
-                return false;
+            if (arestas.getDestino() == vertices.get(id)) {
+                System.out.println("Não é Fonte");
             }
+            System.out.println("É fonte");
         }
-        return true;
+
     }
 
-    public boolean verificaVerticeSumidouro(Vertice vertice) {
+    public void getSumidouro(int id) {
         for (Aresta arestas : arestas) {
-            if (arestas.getOrigem() == vertice) {
-                return false;
+            if (arestas.getOrigem() == vertices.get(id)) {
+                System.out.println("Não é Sumidoro");
             }
         }
-        return true;
+        System.out.println("É Sumidoro");
     }
 }
