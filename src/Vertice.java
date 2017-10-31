@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class Vertice {
 
-    private int id;
+    private String id;
     private List<Aresta> adj;
 
-    Vertice(int id) {
+    Vertice(String id) {
         this.id = id;
         this.adj = new ArrayList<Aresta>();
     }
@@ -24,11 +24,11 @@ public class Vertice {
         adj.add(e);
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
