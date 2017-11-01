@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -168,24 +169,23 @@ public class Grafo {
                                 if (this.arestas.get(k).getOrigem().getId().equals(this.getVertices().get(i).getId())
                                         && this.arestas.get(k).getDestino().getId().equals(this.getVertices().get(j).getId())) {
                                     matrizAdjacencia[i][j] = 1;
-
                                 }
                             } else {
                                 matrizAdjacencia[i][j] = 1;
-
                             }
                         }
-
                     }
-
                 }
             }
-
         }
         return matrizAdjacencia;
     }
-    
- /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
+
+    public void imprimeMatrizAdj() {
+        System.out.println(getMatrizAdjacencia());
+    }
+
+    /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
     Admitindo-se a pior estimativa possível, o caminho infinito. π[v] identifica o vértice de onde se origina 
     uma conexão até v de maneira a formar um caminho mínimo.
         
@@ -200,11 +200,8 @@ public class Grafo {
                  então d[v] ← d[u] + w(u, v)
                        π[v] ← u
     
-    */
-
-
-    /* METODOS DE MANIPULACAO DE VERTICE */
-    
+     */
+ /* METODOS DE MANIPULACAO DE VERTICE */
     public void criarVertice(String id) {
         Vertice v = this.addVertice(id);
 
@@ -296,10 +293,8 @@ public class Grafo {
 
     }
 
-    
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
-    
-    public void criarAresta(int idOrigem, int idDestino) {
+    public void criarAresta(String idOrigem, String idDestino) {
         if (this.getVertices().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {

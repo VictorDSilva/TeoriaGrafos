@@ -9,7 +9,7 @@ public class GeradorMenu {
 
     public static String geraMenu() {
         Scanner ler = new Scanner(System.in);
-
+        int qtd = 0;
         Grafo grafo = new Grafo();
 
         String opt = " "; //opt significa option!!!!!!!!!
@@ -26,6 +26,7 @@ public class GeradorMenu {
             System.out.println("9 - Veririficar se é Fonte");
             System.out.println("10 - Ler XML");
             System.out.println("11 - Gravar XML");
+            System.out.println("12 - Ver matrizes Adjascencia/Incidencia");
             System.out.println("0 - Sair do programa");
             System.out.println("************************");
             System.out.print("Escolha uma opção: ");
@@ -33,28 +34,27 @@ public class GeradorMenu {
             switch (opt) {
                 case "1":
                     //Criar vertices
+                    String variavel = " ";
                     System.out.print("Digite a quantidade de vertices: ");
-                    int qtd = ler.nextInt();
+                    qtd = ler.nextInt();
                     for (int i = 0; i < qtd; i++) {
                         System.out.print("Digite o nome do vertice: ");
-                        grafo.criarVertice(ler.nextLine());
+                        variavel = ler.next();
+                        grafo.criarVertice(variavel);
                     }
-                    
                     break;
                 case "2":
                     //criar arestas 
                     System.out.println(grafo.listarVertice());
                     System.out.println("Digite a quantidade de arestas: ");
-                    int qt = ler.nextInt();
-
-                    for (int i = 0; i < qt; i++) {
+                    qtd = ler.nextInt();
+                    for (int i = 0; i < qtd; i++) {
                         System.out.print("Escolha um vertice de Origem: ");
-                        int origem = ler.nextInt();
+                        String origem = ler.next();
                         System.out.print("Escolha um vertice de Destino: ");
-                        int destino = ler.nextInt();
+                        String destino = ler.next();
                         grafo.criarAresta(origem, destino);
                     }
-
                     break;
                 case "3":
                     //ver vértices 
@@ -108,6 +108,9 @@ public class GeradorMenu {
                 case "11":
                     //gravar xml
                     grafo.gravarXML();
+                    break;
+                case "12":
+                    grafo.imprimeMatrizAdj();
                     break;
                 case "0":
                     System.out.println("Saindo do programa...");
