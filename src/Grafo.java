@@ -21,6 +21,7 @@ public class Grafo {
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
+        this.orientado = false;
 
     }
 
@@ -69,6 +70,19 @@ public class Grafo {
         return v;
     }
 
+    public void removerVertice(Vertice v) {
+        for (int i = 0; i < this.getArestas().size(); i++) {
+
+            if (v.getId().equals(this.getArestas().get(i).getDestino().getId())
+                    || v.getId().equals(this.getArestas().get(i).getOrigem().getId())) {
+
+                this.removerAresta(this.getArestas().get(i));
+                i--;
+            }
+        }
+        this.vertices.remove(v);
+    }
+
     public Aresta addAresta(Vertice origem, Vertice destino) {
         if (this.isOrientado()) {
             Aresta e = new Aresta(origem, destino);
@@ -84,16 +98,8 @@ public class Grafo {
         }
     }
 
-    public Vertice buscaVertice(String id) {
-        for (Vertice u : this.vertices) {
-            if (u.getId() == id) {
-                System.out.println("Mesmo nome " + id);
-                return u;
-            } else {
-                return null;
-            }
-        }
-        return null;
+    public void removerAresta(Aresta aresta) {
+        this.arestas.remove(aresta);
     }
 
     @Override
@@ -112,35 +118,12 @@ public class Grafo {
         return r;
     }
 
+    
+    /* METODOS DE MANIPULACAO DE VERTICE */
+
     public void criarVertice(String id) {
         Vertice v = this.addVertice(id);
 
-    }
-
-    public void criarAresta(int idOrigem, int idDestino) {
-        if (this.getVertices().isEmpty()) {
-            System.out.println("Nao existem vertices");
-        } else {
-            Aresta aresta = this.addAresta(this.getVertices().get(idOrigem),
-                    this.getVertices().get(idDestino));
-        }
-    }
-
-    public void removerAresta(Aresta aresta) {
-        this.arestas.remove(aresta);
-    }
-
-    public void removerVertice(Vertice v) {
-        for (int i = 0; i < this.getArestas().size(); i++) {
-
-            if (v.getId().equals(this.getArestas().get(i).getDestino().getId())
-                    || v.getId().equals(this.getArestas().get(i).getOrigem().getId())) {
-
-                this.removerAresta(this.getArestas().get(i));
-                i--;
-            }
-        }
-        this.vertices.remove(v);
     }
 
     public String listarVertice() {
@@ -151,47 +134,17 @@ public class Grafo {
         }
         return r;
     }
-
-    public void gravarXML() {
-        try {
-            FileWriter arquivo = new FileWriter("grafo.xml");
-            PrintWriter gravarArquivo = new PrintWriter(arquivo);
-
-            gravarArquivo.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-            gravarArquivo.printf("<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"  \n"
-                    + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
-                    + "    xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n"
-                    + "     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n");
-
-            gravarArquivo.printf("  <graph id='1' edgedefault='direcao'>\n");
-
-            for (Vertice v : this.getVertices()) {
-                gravarArquivo.printf("      <node id='" + v.getId() + "'/>\n");
+    
+    public Vertice buscaVertice(String id) {
+        for (Vertice u : this.vertices) {
+            if (u.getId() == id) {
+                System.out.println("Mesmo nome " + id);
+                return u;
+            } else {
+                return null;
             }
-
-            for (Aresta aresta : this.getArestas()) {
-                gravarArquivo.printf("      <edge source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
-            }
-
-            gravarArquivo.printf("  </graph>\n");
-            gravarArquivo.printf("</graphml>");
-
-            arquivo.close();
-        } catch (IOException ex) {
-            System.out.println("Erro ao gerar XML!");
         }
-    }
-
-    public void lerXML(String caminhoArquivo) {
-        try {
-            BufferedReader arquivo = new BufferedReader(new FileReader(caminhoArquivo));
-
-            while (arquivo.ready()) {
-                System.out.println(arquivo.readLine());
-            }
-        } catch (IOException ex) {
-            System.out.println("Erro ao ler XML!");
-        }
+        return null;
     }
 
     public void getOrdem() {
@@ -204,19 +157,6 @@ public class Grafo {
                     + " e " + getArestas().get(i).getDestino() + " são incidentes a aresta: "
                     + getArestas().get(i).getNome());
         }
-    }
-
-    public boolean isAdjacentes(Vertice v1, Vertice v2) {
-        for (int i = 0; i < this.arestas.size(); i++) {
-            if (this.arestas.get(i).getDestino().getId().equals(v1.getId())
-                    && this.arestas.get(i).getOrigem().getId().equals(v2.getId())
-                    || this.arestas.get(i).getOrigem().getId().equals(v1.getId())
-                    && this.arestas.get(i).getDestino().getId().equals(v2.getId())) {
-
-                return true;
-            }
-        }
-        return false;
     }
 
     public int grauVerticeTotal() {
@@ -270,5 +210,73 @@ public class Grafo {
             System.out.println("É Sumidouro");
         }
 
+    }
+
+    
+    /* METODOS DE MANIPULAÇÃO DE ARESTA */
+    public void criarAresta(int idOrigem, int idDestino) {
+        if (this.getVertices().isEmpty()) {
+            System.out.println("Nao existem vertices");
+        } else {
+            Aresta aresta = this.addAresta(this.getVertices().get(idOrigem),
+                    this.getVertices().get(idDestino));
+        }
+    }
+    
+    public boolean isAdjacentes(Vertice v1, Vertice v2) {
+        for (int i = 0; i < this.arestas.size(); i++) {
+            if (this.arestas.get(i).getDestino().getId().equals(v1.getId())
+                    && this.arestas.get(i).getOrigem().getId().equals(v2.getId())
+                    || this.arestas.get(i).getOrigem().getId().equals(v1.getId())
+                    && this.arestas.get(i).getDestino().getId().equals(v2.getId())) {
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /* METODOS DE XML */
+    public void gravarXML() {
+        try {
+            FileWriter arquivo = new FileWriter("grafo.xml");
+            PrintWriter gravarArquivo = new PrintWriter(arquivo);
+
+            gravarArquivo.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+            gravarArquivo.printf("<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\"  \n"
+                    + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+                    + "    xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n"
+                    + "     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n");
+
+            gravarArquivo.printf("  <graph id='1' edgedefault='direcao'>\n");
+
+            for (Vertice v : this.getVertices()) {
+                gravarArquivo.printf("      <node id='" + v.getId() + "'/>\n");
+            }
+
+            for (Aresta aresta : this.getArestas()) {
+                gravarArquivo.printf("      <edge source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
+            }
+
+            gravarArquivo.printf("  </graph>\n");
+            gravarArquivo.printf("</graphml>");
+
+            arquivo.close();
+        } catch (IOException ex) {
+            System.out.println("Erro ao gerar XML!");
+        }
+    }
+
+    public void lerXML(String caminhoArquivo) {
+        try {
+            BufferedReader arquivo = new BufferedReader(new FileReader(caminhoArquivo));
+
+            while (arquivo.ready()) {
+                System.out.println(arquivo.readLine());
+            }
+        } catch (IOException ex) {
+            System.out.println("Erro ao ler XML!");
+        }
     }
 }
