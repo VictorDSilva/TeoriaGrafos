@@ -34,7 +34,7 @@ public class GeradorMenu {
                 case "1":
                     //Criar vertices
                     System.out.print("Digite a quantidade de vertices: ");
-                    grafo.criarVertice(ler.nextInt());
+                    grafo.criarVertice(ler.next());
                     break;
                 case "2":
                     //criar arestas 
@@ -61,11 +61,11 @@ public class GeradorMenu {
                     break;
                 case "5":
                     //Grau
-                    grafo.grauEmissao();
+                    grafo.grauVerticeEmissao();
                     break;
                 case "6":
                     //Grau
-                    grafo.grauRecepcao();
+                    grafo.grauVerticeRecepcao();
                     break;
                 case "7":
                     //ver grafo
