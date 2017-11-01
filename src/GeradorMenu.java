@@ -34,7 +34,12 @@ public class GeradorMenu {
                 case "1":
                     //Criar vertices
                     System.out.print("Digite a quantidade de vertices: ");
-                    grafo.criarVertice(ler.next());
+                    int qtd = ler.nextInt();
+                    for (int i = 0; i < qtd; i++) {
+                        System.out.print("Digite o nome do vertice: ");
+                        grafo.criarVertice(ler.nextLine());
+                    }
+                    
                     break;
                 case "2":
                     //criar arestas 
