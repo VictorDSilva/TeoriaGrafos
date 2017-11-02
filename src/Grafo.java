@@ -292,9 +292,60 @@ public class Grafo {
         }
 
     }
+    public void caminho(int id1, int id2) {
+        int cont = 0;
+        Vertice vertices = getVertices().get(id1);
+        Vertice verticeSecundario;
+        for (int i = 0; i < arestas.size(); i++) {
+            if (arestas.get(i).getOrigem() == vertices) {
+                vertices = arestas.get(i).getDestino();
+                verticeSecundario =
+                if (getSumidouro(arestas.get(i).getOrigem()) == true) {
+                    if (vertices == getVertices().get(id2)) {
+                        cont++;
+                        System.out.println("Existe caminho");
+                    }
+                } else {
+
+                }
+            }
+        }
+        if (cont < 1) {
+            System.out.println("Não Existe caminho");
+        }
+    }
+    
+    public void cadeia(int id1, int id2) {
+        int cont = 0;
+        Vertice vertices = getVertices().get(id1);
+        for (int i = 0; i < arestas.size(); i++) {
+            if (arestas.get(i).getOrigem() == arestas) {
+                arestas = (List<Aresta>) arestas.get(i).getDestino();
+                if (vertices == getVertices().get(id2)) {
+                    cont++;
+                    System.out.println("Existe Cadeia");
+                    break;
+                }
+            }
+        }
+        vertices = getVertices().get(id2);
+        for (int i = 0; i < arestas.size(); i++) {
+            if (arestas.get(i).getDestino() == arestas) {
+                arestas = (List<Aresta>) arestas.get(i).getOrigem();
+                if (arestas == getArestas().get(id2)) {
+                    cont++;
+                    System.out.println("Existe Cadeia");
+                    break;
+                }
+            }
+        }
+        if (cont < 1) {
+            System.out.println("Não Existe Cadeia");
+        }
+    }
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
-    public void criarAresta(String idOrigem, String idDestino) {
+    public void criarAresta(int idOrigem, int idDestino) {
         if (this.getVertices().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {

@@ -50,9 +50,9 @@ public class GeradorMenu {
                     qtd = ler.nextInt();
                     for (int i = 0; i < qtd; i++) {
                         System.out.print("Escolha um vertice de Origem: ");
-                        String origem = ler.next();
+                        int origem = ler.nextInt();
                         System.out.print("Escolha um vertice de Destino: ");
-                        String destino = ler.next();
+                        int destino = ler.nextInt();
                         grafo.criarAresta(origem, destino);
                     }
                     break;
