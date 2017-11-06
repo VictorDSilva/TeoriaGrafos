@@ -185,30 +185,30 @@ public class Grafo {
         }
         return matrizAdjacencia;
     }
-    
-        public boolean caminho(String inicio, String destino) {
+
+    public boolean caminho(String inicio, String destino) {
         //if (existeTarget(destino)) {
-            ArrayList<Aresta> arestasSource = new ArrayList<>();
+        ArrayList<Aresta> arestasSource = new ArrayList<>();
 
-            for (Aresta aresta : arestas) {
-                if (aresta.getDestino()== buscaVertice(inicio) && buscaVertice(inicio) != aresta.getDestino()) {
-                    arestasSource.add(aresta);
-                }
+        for (Aresta aresta : arestas) {
+            if (aresta.getDestino() == buscaVertice(inicio) && buscaVertice(inicio) != aresta.getDestino()) {
+                arestasSource.add(aresta);
             }
+        }
 
-            while (arestasSource.size() >= 1) {
-                ArrayList<Aresta> newArestasSource = new ArrayList<>();
-                for (Aresta arestasSource1 : arestasSource) {
-                    for (Aresta aresta : arestas) {
-                        if (arestasSource1.getDestino() == aresta.getOrigem()&& arestasSource1.getDestino() != buscaVertice(inicio)) {
-                            newArestasSource.add(aresta);
-                        } else if (arestasSource1.getDestino() == buscaVertice(destino)) {
-                            return true;
-                        }
+        while (arestasSource.size() >= 1) {
+            ArrayList<Aresta> newArestasSource = new ArrayList<>();
+            for (Aresta arestasSource1 : arestasSource) {
+                for (Aresta aresta : arestas) {
+                    if (arestasSource1.getDestino() == aresta.getOrigem() && arestasSource1.getDestino() != buscaVertice(inicio)) {
+                        newArestasSource.add(aresta);
+                    } else if (arestasSource1.getDestino() == buscaVertice(destino)) {
+                        return true;
                     }
                 }
-                arestasSource = newArestasSource;
             }
+            arestasSource = newArestasSource;
+        }
         //}
         return false;
     }
@@ -244,26 +244,26 @@ public class Grafo {
             int nodesFoundSize = nodesFound.size();
             for (Aresta arestaFound : arestasFound) {
                 for (Aresta aresta : arestas) {
-                    if (arestaFound.getDestino()== buscaVertice(destino) || arestaFound.getOrigem() == buscaVertice(destino)) {
+                    if (arestaFound.getDestino() == buscaVertice(destino) || arestaFound.getOrigem() == buscaVertice(destino)) {
                         return true;
                     }
-                        if (arestaFound.getDestino() == aresta.getOrigem()) {
-                            newArestasFound.add(aresta);
-                            newNodesFound.add(aresta.getDestino());
-                        }
-                        if (arestaFound.getDestino() == aresta.getDestino()) {
-                            newArestasFound.add(aresta);
-                            newNodesFound.add(aresta.getOrigem());
-                        }
-                        if (arestaFound.getOrigem()== aresta.getOrigem()) {
-                            newArestasFound.add(aresta);
-                            newNodesFound.add(aresta.getDestino());
-                        }
-                        if (arestaFound.getOrigem()== aresta.getDestino()) {
-                            newArestasFound.add(aresta);
-                            newNodesFound.add(aresta.getOrigem());
-                        }
-                    
+                    if (arestaFound.getDestino() == aresta.getOrigem()) {
+                        newArestasFound.add(aresta);
+                        newNodesFound.add(aresta.getDestino());
+                    }
+                    if (arestaFound.getDestino() == aresta.getDestino()) {
+                        newArestasFound.add(aresta);
+                        newNodesFound.add(aresta.getOrigem());
+                    }
+                    if (arestaFound.getOrigem() == aresta.getOrigem()) {
+                        newArestasFound.add(aresta);
+                        newNodesFound.add(aresta.getDestino());
+                    }
+                    if (arestaFound.getOrigem() == aresta.getDestino()) {
+                        newArestasFound.add(aresta);
+                        newNodesFound.add(aresta.getOrigem());
+                    }
+
                 }
             }
             for (Vertice n : newNodesFound) {
@@ -272,7 +272,7 @@ public class Grafo {
                 }
             }
             arestasFound = newArestasFound;
-            if(nodesFoundSize == nodesFound.size()) {
+            if (nodesFoundSize == nodesFound.size()) {
                 return false;
             }
         }
@@ -402,12 +402,11 @@ public class Grafo {
     }
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
-    public void criarAresta(int idOrigem, int idDestino) {
+    public void criarAresta(String idOrigem, String idDestino) {
         if (this.buscaVertice().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {
-            Aresta aresta = this.addAresta(this.buscaVertice().get(idOrigem),
-                    this.buscaVertice().get(idDestino));
+            Aresta aresta = this.addAresta(this.buscaVertice(idOrigem), this.buscaVertice(idDestino));
         }
     }
 
@@ -449,7 +448,7 @@ public class Grafo {
     public boolean isMultigrafo() {
         for (Vertice v1 : vertices) {
             for (Vertice v2 : vertices) {
-                if (getAdjacentes(v1 , v2) > 1) {
+                if (getAdjacentes(v1, v2) > 1) {
                     return true;
                 }
             }
