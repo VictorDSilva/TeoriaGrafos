@@ -27,6 +27,7 @@ public class GeradorMenu {
             System.out.println("10 - Ler XML");
             System.out.println("11 - Gravar XML");
             System.out.println("12 - Ver matrizes Adjascencia/Incidencia");
+            System.out.println("13 - ");
             System.out.println("0 - Sair do programa");
             System.out.println("************************");
             System.out.print("Escolha uma opção: ");
@@ -50,9 +51,9 @@ public class GeradorMenu {
                     qtd = ler.nextInt();
                     for (int i = 0; i < qtd; i++) {
                         System.out.print("Escolha um vertice de Origem: ");
-                        int origem = ler.nextInt();
+                        String origem = ler.next();
                         System.out.print("Escolha um vertice de Destino: ");
-                        int destino = ler.nextInt();
+                        String destino = ler.next();
                         grafo.criarAresta(origem, destino);
                     }
                     break;
@@ -110,7 +111,7 @@ public class GeradorMenu {
                     grafo.gravarXML();
                     break;
                 case "12":
-                    //grafo.imprimeMatrizAdj();
+                    grafo.getIncidencia();
                     break;
                 case "0":
                     System.out.println("Saindo do programa...");
