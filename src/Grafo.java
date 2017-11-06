@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -160,8 +161,8 @@ public class Grafo {
 
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
-                boolean teste = this.isAdjacentes(this.getVertices().get(i), this.getVertices().get(j));
-                if (teste) {
+                int teste = this.getAdjacentes(this.getVertices().get(i), this.getVertices().get(j));
+                if (teste > 0) {
                     for (k = 0; k < m; k++) {
                         for (k = 0; k < m; k++) {
                             if (this.isOrientado()) {
@@ -184,8 +185,8 @@ public class Grafo {
         }
         return matrizAdjacencia;
     }
-    
- /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
+
+    /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
     Admitindo-se a pior estimativa possível, o caminho infinito. π[v] identifica o vértice de onde se origina 
     uma conexão até v de maneira a formar um caminho mínimo.
         
@@ -200,11 +201,8 @@ public class Grafo {
                  então d[v] ← d[u] + w(u, v)
                        π[v] ← u
     
-    */
-
-
-    /* METODOS DE MANIPULACAO DE VERTICE */
-    
+     */
+ /* METODOS DE MANIPULACAO DE VERTICE */
     public void criarVertice(String id) {
         Vertice v = this.addVertice(id);
 
@@ -275,6 +273,19 @@ public class Grafo {
         return 0;
     }
 
+    public int grauVertice(Vertice node) {
+        int cont = 0;
+        for (int i = 0; i < arestas.size(); i++) {
+            if (arestas.get(i).getOrigem() == node) {
+                cont++;
+            }
+            if (arestas.get(i).getDestino() == node) {
+                cont++;
+            }
+        }
+        return cont;
+    }
+
     public void getFonte(int id) {
 
         for (Aresta arestas : arestas) {
@@ -296,9 +307,7 @@ public class Grafo {
 
     }
 
-    
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
-    
     public void criarAresta(int idOrigem, int idDestino) {
         if (this.getVertices().isEmpty()) {
             System.out.println("Nao existem vertices");
@@ -308,14 +317,47 @@ public class Grafo {
         }
     }
 
-    public boolean isAdjacentes(Vertice v1, Vertice v2) {
+    public int getAdjacentes(Vertice v1, Vertice v2) {
+        int cont = 0;
+
         for (int i = 0; i < this.arestas.size(); i++) {
             if (this.arestas.get(i).getDestino().getId().equals(v1.getId())
                     && this.arestas.get(i).getOrigem().getId().equals(v2.getId())
                     || this.arestas.get(i).getOrigem().getId().equals(v1.getId())
                     && this.arestas.get(i).getDestino().getId().equals(v2.getId())) {
+                cont++;
 
-                return true;
+            }
+        }
+        return cont;
+    }
+
+    /* MANIPULACAO DO GRAFO */
+    public int isRegular() {
+        int grau = -1;
+        for (Vertice v : this.vertices) {
+            if (grau == -1) {
+                grau = grauVertice(v);
+            } else if (grau != grauVertice(v)) {
+                return 0;
+            }
+        }
+        return grau;
+    }
+
+    public int isCompleto() {
+        if (isRegular() == vertices.size() - 1) {
+            return vertices.size();
+        }
+        return 0;
+    }
+
+    public boolean isMultigrafo() {
+        for (Vertice v1 : vertices) {
+            for (Vertice v2 : vertices) {
+                if (getAdjacentes(v1 , v2) > 1) {
+                    return true;
+                }
             }
         }
         return false;
