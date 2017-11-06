@@ -379,26 +379,29 @@ public class Grafo {
         }
         return cont;
     }
-
-    public void getFonte(int id) {
+//arrumar o buscavertive string
+    public void getFonte(String id) {
 
         for (Aresta arestas : arestas) {
-            if (arestas.getDestino() == vertices.get(id)) {
-                System.out.println("Não é Fonte");
-            }
-            System.out.println("É fonte");
-        }
+            for (Vertice vertices : vertices) {
 
+                if (arestas.getDestino() == this.buscaVertice(id)) {
+                    System.out.println("Não é Fonte");
+                }
+                System.out.println("É fonte");
+            }
+        }
     }
 
-    public void getSumidouro(int id) {
+    public void getSumidouro(String id) {
         for (Aresta arestas : arestas) {
-            if (arestas.getDestino() == vertices.get(id)) {
-                System.out.println("Não é Sumidouro");
+            for (Vertice vertices : vertices) {
+                if (arestas.getDestino() == this.buscaVertice(id)) {
+                    System.out.println("Não é Sumidouro");
+                }
+                System.out.println("É Sumidouro");
             }
-            System.out.println("É Sumidouro");
         }
-
     }
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */

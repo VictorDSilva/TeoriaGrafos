@@ -67,11 +67,13 @@ public class GeradorMenu {
                     break;
                 case "5":
                     //Grau
-                    grafo.grauVerticeEmissao();
+                    System.out.print("O grau de Emissao e: ");
+                    System.out.println(grafo.grauVerticeEmissao());
                     break;
                 case "6":
                     //Grau
-                    grafo.grauVerticeRecepcao();
+                    System.out.print("O grau de Recepcao e: ");
+                    System.out.println(grafo.grauVerticeRecepcao());
                     break;
                 case "7":
                     //ver grafo
