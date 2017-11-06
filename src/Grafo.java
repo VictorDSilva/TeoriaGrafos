@@ -47,8 +47,17 @@ public class Grafo {
         this.id = id;
     }
 
-    public List<Vertice> buscaVertice() {
+    public List<Vertice> getVertices() {
         return vertices;
+    }
+    
+    public Vertice buscaVertice(String id) {
+        for (Vertice v : vertices) {
+            if (v.getId() == id) {
+                return v;
+            }
+        }
+        return null;
     }
 
     public void setVertices(List<Vertice> vertices) {
@@ -119,7 +128,7 @@ public class Grafo {
     }
 
     public int[][] getMatrizIncidencia() {
-        int linha = this.buscaVertice().size();
+        int linha = this.getVertices().size();
         int coluna = this.getArestas().size();
         int[][] matrizIncidencia = new int[linha][coluna];
         int i, j;
@@ -127,21 +136,21 @@ public class Grafo {
             for (j = 0; j < coluna; j++) {
                 if (this.isOrientado()) {
 
-                    if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
+                    if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
                         matrizIncidencia[i][j] = 2;
                     } else {
-                        if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId())) {
+                        if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId())) {
                             matrizIncidencia[i][j] = 1;
                         }
-                        if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
+                        if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
                             matrizIncidencia[i][j] = -1;
                         }
                     }
                 } else {
-                    if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
+                    if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
                         matrizIncidencia[i][j] = 2;
-                    } else if ((this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()))
-                            || (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId()))) {
+                    } else if ((this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()))
+                            || (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId()))) {
                         matrizIncidencia[i][j] = 1;
 
                     }
@@ -154,20 +163,20 @@ public class Grafo {
 
     public int[][] getMatrizAdjacencia() {
 
-        int n = this.buscaVertice().size();
+        int n = this.getVertices().size();
         int m = this.getArestas().size();
         int[][] matrizAdjacencia = new int[n][n];
         int i, j, k;
 
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
-                int teste = this.getAdjacentes(this.buscaVertice().get(i), this.buscaVertice().get(j));
+                int teste = this.getAdjacentes(this.getVertices().get(i), this.getVertices().get(j));
                 if (teste > 0) {
                     for (k = 0; k < m; k++) {
                         for (k = 0; k < m; k++) {
                             if (this.isOrientado()) {
-                                if (this.arestas.get(k).getOrigem().getId().equals(this.buscaVertice().get(i).getId())
-                                        && this.arestas.get(k).getDestino().getId().equals(this.buscaVertice().get(j).getId())) {
+                                if (this.arestas.get(k).getOrigem().getId().equals(this.getVertices().get(i).getId())
+                                        && this.arestas.get(k).getDestino().getId().equals(this.getVertices().get(j).getId())) {
                                     matrizAdjacencia[i][j] = 1;
 
                                 }
@@ -304,27 +313,15 @@ public class Grafo {
 
     public String listarVertice() {
         String r = "";
-        for (Vertice u : this.buscaVertice()) {
+        for (Vertice u : this.getVertices()) {
             r += "V: " + u.getId();
             r += "\n";
         }
         return r;
     }
 
-    public Vertice buscaVertice(String id) {
-        for (Vertice u : this.vertices) {
-            if (u.getId() == id) {
-                System.out.println("Mesmo nome " + id);
-                return u;
-            } else {
-                return null;
-            }
-        }
-        return null;
-    }
-
     public void getOrdem() {
-        System.out.println(" A ordem do grafo é: " + buscaVertice().size());
+        System.out.println(" A ordem do grafo é: " + getVertices().size());
     }
 
     public void getIncidencia() {
@@ -406,7 +403,7 @@ public class Grafo {
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
     public void criarAresta(String idOrigem, String idDestino) {
-        if (this.buscaVertice().isEmpty()) {
+        if (this.getVertices().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {
             Aresta aresta = this.addAresta(this.buscaVertice(idOrigem), this.buscaVertice(idDestino));
@@ -474,7 +471,7 @@ public class Grafo {
 
             gravarArquivo.printf("  <graph id='1' arestadefault='direcao'>\n");
 
-            for (Vertice v : this.buscaVertice()) {
+            for (Vertice v : this.getVertices()) {
                 gravarArquivo.printf("      <node id='" + v.getId() + "'/>\n");
             }
 

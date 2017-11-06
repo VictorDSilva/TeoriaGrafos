@@ -82,13 +82,13 @@ public class GeradorMenu {
                 case "8":
                     //Sumidouro
                     System.out.print("Digite o vertice: ");
-                    int x = ler.nextInt();
+                    String x = ler.next();
                     grafo.getSumidouro(x);
                     break;
                 case "9":
                     //Fonte
                     System.out.print("Digite o vertice: ");
-                    int y = ler.nextInt();
+                    String y = ler.next();
                     grafo.getFonte(y);
                     break;
                 case "10":
