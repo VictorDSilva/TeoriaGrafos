@@ -47,7 +47,7 @@ public class Grafo {
         this.id = id;
     }
 
-    public List<Vertice> getVertices() {
+    public List<Vertice> buscaVertice() {
         return vertices;
     }
 
@@ -119,7 +119,7 @@ public class Grafo {
     }
 
     public int[][] getMatrizIncidencia() {
-        int linha = this.getVertices().size();
+        int linha = this.buscaVertice().size();
         int coluna = this.getArestas().size();
         int[][] matrizIncidencia = new int[linha][coluna];
         int i, j;
@@ -127,21 +127,21 @@ public class Grafo {
             for (j = 0; j < coluna; j++) {
                 if (this.isOrientado()) {
 
-                    if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
+                    if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
                         matrizIncidencia[i][j] = 2;
                     } else {
-                        if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId())) {
+                        if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId())) {
                             matrizIncidencia[i][j] = 1;
                         }
-                        if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
+                        if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
                             matrizIncidencia[i][j] = -1;
                         }
                     }
                 } else {
-                    if (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
+                    if (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()) && this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId())) {
                         matrizIncidencia[i][j] = 2;
-                    } else if ((this.getVertices().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()))
-                            || (this.getVertices().get(i).getId().equals(this.getArestas().get(j).getDestino().getId()))) {
+                    } else if ((this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getOrigem().getId()))
+                            || (this.buscaVertice().get(i).getId().equals(this.getArestas().get(j).getDestino().getId()))) {
                         matrizIncidencia[i][j] = 1;
 
                     }
@@ -154,20 +154,20 @@ public class Grafo {
 
     public int[][] getMatrizAdjacencia() {
 
-        int n = this.getVertices().size();
+        int n = this.buscaVertice().size();
         int m = this.getArestas().size();
         int[][] matrizAdjacencia = new int[n][n];
         int i, j, k;
 
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++) {
-                int teste = this.getAdjacentes(this.getVertices().get(i), this.getVertices().get(j));
+                int teste = this.getAdjacentes(this.buscaVertice().get(i), this.buscaVertice().get(j));
                 if (teste > 0) {
                     for (k = 0; k < m; k++) {
                         for (k = 0; k < m; k++) {
                             if (this.isOrientado()) {
-                                if (this.arestas.get(k).getOrigem().getId().equals(this.getVertices().get(i).getId())
-                                        && this.arestas.get(k).getDestino().getId().equals(this.getVertices().get(j).getId())) {
+                                if (this.arestas.get(k).getOrigem().getId().equals(this.buscaVertice().get(i).getId())
+                                        && this.arestas.get(k).getDestino().getId().equals(this.buscaVertice().get(j).getId())) {
                                     matrizAdjacencia[i][j] = 1;
 
                                 }
@@ -185,6 +185,100 @@ public class Grafo {
         }
         return matrizAdjacencia;
     }
+    
+        public boolean caminho(String inicio, String destino) {
+        //if (existeTarget(destino)) {
+            ArrayList<Aresta> arestasSource = new ArrayList<>();
+
+            for (Aresta aresta : arestas) {
+                if (aresta.getDestino()== buscaVertice(inicio) && buscaVertice(inicio) != aresta.getDestino()) {
+                    arestasSource.add(aresta);
+                }
+            }
+
+            while (arestasSource.size() >= 1) {
+                ArrayList<Aresta> newArestasSource = new ArrayList<>();
+                for (Aresta arestasSource1 : arestasSource) {
+                    for (Aresta aresta : arestas) {
+                        if (arestasSource1.getDestino() == aresta.getOrigem()&& arestasSource1.getDestino() != buscaVertice(inicio)) {
+                            newArestasSource.add(aresta);
+                        } else if (arestasSource1.getDestino() == buscaVertice(destino)) {
+                            return true;
+                        }
+                    }
+                }
+                arestasSource = newArestasSource;
+            }
+        //}
+        return false;
+    }
+
+    public boolean cadeia(String inicio, String destino) {
+        ArrayList<Aresta> arestasFound = new ArrayList<>();
+        ArrayList<Vertice> nodesFound = new ArrayList<>();
+        ArrayList<Vertice> newNodesFound = new ArrayList<>();
+
+        for (Aresta aresta : arestas) {
+            if (!nodesFound.contains(aresta.getOrigem()) && !nodesFound.contains(aresta.getDestino())) {
+                if (aresta.getOrigem() == buscaVertice(inicio)) {
+                    arestasFound.add(aresta);
+                    newNodesFound.add(aresta.getDestino());
+                }
+                if (aresta.getDestino() == buscaVertice(inicio)) {
+                    arestasFound.add(aresta);
+                    newNodesFound.add(aresta.getOrigem());
+                }
+            }
+        }
+
+        nodesFound.add(buscaVertice(inicio));
+        for (Vertice n : newNodesFound) {
+            if (!nodesFound.contains(n)) {
+                nodesFound.add(n);
+            }
+        }
+
+        while (arestasFound.size() >= 1) {
+            ArrayList<Aresta> newArestasFound = new ArrayList<>();
+            newNodesFound = new ArrayList<>();
+            int nodesFoundSize = nodesFound.size();
+            for (Aresta arestaFound : arestasFound) {
+                for (Aresta aresta : arestas) {
+                    if (arestaFound.getDestino()== buscaVertice(destino) || arestaFound.getOrigem() == buscaVertice(destino)) {
+                        return true;
+                    }
+                        if (arestaFound.getDestino() == aresta.getOrigem()) {
+                            newArestasFound.add(aresta);
+                            newNodesFound.add(aresta.getDestino());
+                        }
+                        if (arestaFound.getDestino() == aresta.getDestino()) {
+                            newArestasFound.add(aresta);
+                            newNodesFound.add(aresta.getOrigem());
+                        }
+                        if (arestaFound.getOrigem()== aresta.getOrigem()) {
+                            newArestasFound.add(aresta);
+                            newNodesFound.add(aresta.getDestino());
+                        }
+                        if (arestaFound.getOrigem()== aresta.getDestino()) {
+                            newArestasFound.add(aresta);
+                            newNodesFound.add(aresta.getOrigem());
+                        }
+                    
+                }
+            }
+            for (Vertice n : newNodesFound) {
+                if (!nodesFound.contains(n)) {
+                    nodesFound.add(n);
+                }
+            }
+            arestasFound = newArestasFound;
+            if(nodesFoundSize == nodesFound.size()) {
+                return false;
+            }
+        }
+        return false;
+    }
+
 
     /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
     Admitindo-se a pior estimativa possível, o caminho infinito. π[v] identifica o vértice de onde se origina 
@@ -210,7 +304,7 @@ public class Grafo {
 
     public String listarVertice() {
         String r = "";
-        for (Vertice u : this.getVertices()) {
+        for (Vertice u : this.buscaVertice()) {
             r += "V: " + u.getId();
             r += "\n";
         }
@@ -230,7 +324,7 @@ public class Grafo {
     }
 
     public void getOrdem() {
-        System.out.println(" A ordem do grafo é: " + getVertices().size());
+        System.out.println(" A ordem do grafo é: " + buscaVertice().size());
     }
 
     public void getIncidencia() {
@@ -309,11 +403,11 @@ public class Grafo {
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
     public void criarAresta(int idOrigem, int idDestino) {
-        if (this.getVertices().isEmpty()) {
+        if (this.buscaVertice().isEmpty()) {
             System.out.println("Nao existem vertices");
         } else {
-            Aresta aresta = this.addAresta(this.getVertices().get(idOrigem),
-                    this.getVertices().get(idDestino));
+            Aresta aresta = this.addAresta(this.buscaVertice().get(idOrigem),
+                    this.buscaVertice().get(idDestino));
         }
     }
 
@@ -376,14 +470,14 @@ public class Grafo {
                     + "    xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns\n"
                     + "     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\">\n");
 
-            gravarArquivo.printf("  <graph id='1' edgedefault='direcao'>\n");
+            gravarArquivo.printf("  <graph id='1' arestadefault='direcao'>\n");
 
-            for (Vertice v : this.getVertices()) {
+            for (Vertice v : this.buscaVertice()) {
                 gravarArquivo.printf("      <node id='" + v.getId() + "'/>\n");
             }
 
             for (Aresta aresta : this.getArestas()) {
-                gravarArquivo.printf("      <edge source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
+                gravarArquivo.printf("      <aresta source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
             }
 
             gravarArquivo.printf("  </graph>\n");
