@@ -169,19 +169,14 @@ public class Grafo {
                                 if (this.arestas.get(k).getOrigem().getId().equals(this.getVertices().get(i).getId())
                                         && this.arestas.get(k).getDestino().getId().equals(this.getVertices().get(j).getId())) {
                                     matrizAdjacencia[i][j] = 1;
-
                                 }
                             } else {
                                 matrizAdjacencia[i][j] = 1;
-
                             }
                         }
-
                     }
-
                 }
             }
-
         }
         return matrizAdjacencia;
     }
@@ -306,6 +301,20 @@ public class Grafo {
         }
 
     }
+    public void caminho(int id1, int id2) {
+        int cont = 0;
+        Vertice vertices = getVertices().get(id1);
+        Vertice verticeSecundario;
+        for (int i = 0; i < arestas.size(); i++) {
+            if (arestas.get(i).getOrigem() == vertices) {
+                vertices = arestas.get(i).getDestino();
+                verticeSecundario =
+                if (getSumidouro(arestas.get(i).getOrigem()) == true) {
+                    if (vertices == getVertices().get(id2)) {
+                        cont++;
+                        System.out.println("Existe caminho");
+                    }
+                } else {
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
     public void criarAresta(int idOrigem, int idDestino) {
