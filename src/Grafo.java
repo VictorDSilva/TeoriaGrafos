@@ -324,7 +324,6 @@ public class Grafo {
         System.out.println(" A ordem do grafo é: " + getVertices().size());
     }
 
-    
     public void getIncidencia() {
         for (int i = 0; i <= getArestas().size() - 1; i++) {
             System.out.println("Os vertices: " + getArestas().get(i).getOrigem().getId()
@@ -332,13 +331,17 @@ public class Grafo {
                     + getArestas().get(i).getNome());
         }
     }
-    
-    public void getListaAdjacencia(){
+
+    public void getListaAdjacencia() {
+        String aux = "";
         ArrayList no1 = new ArrayList<>();
-        
+        for (int k = 0; k < getVertices().size() - 1; k++) {
+            aux = Integer.toString(k); //converte int para String
+            buscaVertice(aux);
+        }
     }
 
-    public void imprimiIncidencia() {
+    public void imprimeMatrizIncidencia() {
         String resultado = "";
 
         int matriz[][] = this.getMatrizIncidencia();
@@ -462,11 +465,27 @@ public class Grafo {
         return grau;
     }
 
+    public void imprimeRegular() {
+        if (this.isRegular() == 0) {
+            System.out.println("Nao é Regular");
+        } else {
+            System.out.println("É Regular");
+        }
+    }
+
     public int isCompleto() {
         if (isRegular() == vertices.size() - 1) {
             return vertices.size();
         }
         return 0;
+    }
+
+    public void imprimeCompleto() {
+        if (this.isCompleto() == 0) {
+            System.out.println("Nao é Completo");
+        } else {
+            System.out.println("É Completo");
+        }
     }
 
     public boolean isMultigrafo() {
@@ -480,6 +499,13 @@ public class Grafo {
         return false;
     }
 
+    public void imprimeMultigrafo() {
+        if (this.isMultigrafo() == true) {
+            System.out.println("É um Multigrafo");
+        } else {
+            System.out.println("Nao é um Multigrafo");
+        }
+    }
 
     /* METODOS DE XML */
     public void gravarXML() {
