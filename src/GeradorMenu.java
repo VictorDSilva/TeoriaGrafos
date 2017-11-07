@@ -47,7 +47,7 @@ public class GeradorMenu {
                 case "2":
                     //criar arestas 
                     System.out.println(grafo.listarVertice());
-                    System.out.println("Digite a quantidade de arestas: ");
+                    System.out.print("Digite a quantidade de arestas: ");
                     qtd = ler.nextInt();
                     for (int i = 0; i < qtd; i++) {
                         System.out.print("Escolha um vertice de Origem: ");
@@ -66,14 +66,12 @@ public class GeradorMenu {
                     grafo.getOrdem();
                     break;
                 case "5":
-                    //Grau
-                    System.out.print("O grau de Emissao e: ");
-                    System.out.println(grafo.grauVerticeEmissao());
+                    //Grau Emissao
+                    grafo.grauVerticeEmissao();
                     break;
                 case "6":
-                    //Grau
-                    System.out.print("O grau de Recepcao e: ");
-                    System.out.println(grafo.grauVerticeRecepcao());
+                    //Grau Recepsao
+                    grafo.grauVerticeRecepcao();
                     break;
                 case "7":
                     //ver grafo
@@ -83,13 +81,21 @@ public class GeradorMenu {
                     //Sumidouro
                     System.out.print("Digite o vertice: ");
                     String x = ler.next();
-                    grafo.getSumidouro(x);
+                    if (grafo.isSumidouro(x)) {
+                        System.out.println("É sumidouro");
+                    } else {
+                        System.out.println("Nao e sumidouro");
+                    }
                     break;
                 case "9":
                     //Fonte
                     System.out.print("Digite o vertice: ");
                     String y = ler.next();
-                    grafo.getFonte(y);
+                    if (grafo.isFonte(y)) {
+                        System.out.println("É fonte");
+                    } else {
+                        System.out.println("Nao e fonte");
+                    }
                     break;
                 case "10":
                     Boolean menu = true;
@@ -113,6 +119,7 @@ public class GeradorMenu {
                     grafo.gravarXML();
                     break;
                 case "12":
+                    System.out.println("Matrz de Incidencia");
                     grafo.getIncidencia();
                     break;
                 case "0":

@@ -19,6 +19,7 @@ public class Aresta {
     public Aresta(Vertice origem, Vertice destino) {       
         this.origem = origem;
         this.destino = destino;
+        this.nome = origem.getId() + destino.getId();
     }
 
 
