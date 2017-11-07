@@ -30,7 +30,9 @@ public class GeradorMenu {
             System.out.println("13 - Ver matrizes Adjascencia");
             System.out.println("14 - Ver Lista Incidencia");
             System.out.println("15 - Ver Lista Adjascencia");
-
+            System.out.println("16 - Ver Se é Multigrafo");
+            System.out.println("17 - Ver Se é Completo");
+            System.out.println("18 - Ver Se é Regular");
             System.out.println("0 - Sair do programa");
             System.out.println("************************");
             System.out.print("Escolha uma opção: ");
@@ -123,11 +125,29 @@ public class GeradorMenu {
                     break;
                 case "12":
                     System.out.println("Matriz de Incidencia");
-                    grafo.imprimiIncidencia();
+                    grafo.imprimeMatrizIncidencia();
                     break;
                 case "13":
                     System.out.println("Matriz de Adjacencia");
                     grafo.imprimiAdjacencia();
+                    break;
+                case "14":
+                    //ver lista de incidencia
+                    break;
+                case "15":
+                    //ver lista de adjacencia
+                    break;
+                case "16":
+                    //ver se é multigrafo
+                    grafo.imprimeMultigrafo();
+                    break;
+                case "17":
+                    //ver se é completo
+                    grafo.imprimeCompleto();
+                    break;
+                case "18":
+                    //ver se é regular
+                    grafo.imprimeRegular();
                     break;
                 case "0":
                     System.out.println("Saindo do programa...");
