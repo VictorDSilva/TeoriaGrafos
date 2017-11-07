@@ -26,8 +26,11 @@ public class GeradorMenu {
             System.out.println("9 - Veririficar se é Fonte");
             System.out.println("10 - Ler XML");
             System.out.println("11 - Gravar XML");
-            System.out.println("12 - Ver matrizes Adjascencia/Incidencia");
-            System.out.println("13 - ");
+            System.out.println("12 - Ver matrizes Incidencia");
+            System.out.println("13 - Ver matrizes Adjascencia");
+            System.out.println("14 - Ver Lista Incidencia");
+            System.out.println("15 - Ver Lista Adjascencia");
+
             System.out.println("0 - Sair do programa");
             System.out.println("************************");
             System.out.print("Escolha uma opção: ");
@@ -119,8 +122,12 @@ public class GeradorMenu {
                     grafo.gravarXML();
                     break;
                 case "12":
-                    System.out.println("Matrz de Incidencia");
-                    grafo.getIncidencia();
+                    System.out.println("Matriz de Incidencia");
+                    grafo.imprimiIncidencia();
+                    break;
+                case "13":
+                    System.out.println("Matriz de Adjacencia");
+                    grafo.imprimiAdjacencia();
                     break;
                 case "0":
                     System.out.println("Saindo do programa...");

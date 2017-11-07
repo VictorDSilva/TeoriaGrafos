@@ -164,7 +164,7 @@ public class Grafo {
     public int[][] getMatrizAdjacencia() {
 
         int n = this.getVertices().size();
-        int m = this.getArestas().size();
+        int m = this.getVertices().size();
         int[][] matrizAdjacencia = new int[n][n];
         int i, j, k;
 
@@ -324,12 +324,46 @@ public class Grafo {
         System.out.println(" A ordem do grafo é: " + getVertices().size());
     }
 
+    
     public void getIncidencia() {
         for (int i = 0; i <= getArestas().size() - 1; i++) {
             System.out.println("Os vertices: " + getArestas().get(i).getOrigem().getId()
                     + " e " + getArestas().get(i).getDestino().getId() + " são incidentes a aresta: "
                     + getArestas().get(i).getNome());
         }
+    }
+    
+    public void getListaAdjacencia(){
+        ArrayList no1 = new ArrayList<>();
+        
+    }
+
+    public void imprimiIncidencia() {
+        String resultado = "";
+
+        int matriz[][] = this.getMatrizIncidencia();
+
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = 0; j < arestas.size(); j++) {
+                resultado += matriz[i][j] + "\t";
+            }
+            resultado += "\n";
+        }
+        System.out.println(resultado);
+    }
+
+    public void imprimiAdjacencia() {
+        String resultado = "";
+
+        int matriz[][] = this.getMatrizAdjacencia();
+
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = 0; j < vertices.size(); j++) {
+                resultado += matriz[i][j] + "\t";
+            }
+            resultado += "\n";
+        }
+        System.out.println(resultado);
     }
 
     public void grauVerticeRecepcao() {
@@ -341,20 +375,20 @@ public class Grafo {
                     cont++;
                 }
             }
-            System.out.println(v.getId() + " tem grau: " + cont);            
+            System.out.println(v.getId() + " tem grau: " + cont);
         }
     }
 
     public void grauVerticeEmissao() {
         int cont = 0;
-        for (Vertice v : this.vertices) {           
+        for (Vertice v : this.vertices) {
             for (int i = 0; i < arestas.size(); i++) {
                 if (arestas.get(i).getOrigem() == v) {
                     cont++;
                 }
             }
             System.out.println(v.getId() + " tem grau: " + cont);
-        }        
+        }
     }
 
     public int grauVertice(Vertice node) {
