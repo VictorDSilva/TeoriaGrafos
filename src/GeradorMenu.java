@@ -9,6 +9,7 @@ public class GeradorMenu {
 
     public static String geraMenu() {
         Scanner ler = new Scanner(System.in);
+        String aux = "";
         int qtd = 0;
         Grafo grafo = new Grafo();
 
@@ -33,21 +34,23 @@ public class GeradorMenu {
             System.out.println("16 - Ver Se é Multigrafo");
             System.out.println("17 - Ver Se é Completo");
             System.out.println("18 - Ver Se é Regular");
+            System.out.println("19 - Remover Vértice");
+            System.out.println("20 - Remover  Aresta");
             System.out.println("0 - Sair do programa");
             System.out.println("************************");
             System.out.print("Escolha uma opção: ");
             opt = ler.next();
             switch (opt) {
                 case "1":
-                    //Criar vertices
-                    String variavel = " ";
+                    //Criar vertices                    
                     System.out.print("Digite a quantidade de vertices: ");
                     qtd = ler.nextInt();
                     for (int i = 0; i < qtd; i++) {
                         System.out.print("Digite o nome do vertice: ");
-                        variavel = ler.next();
-                        grafo.criarVertice(variavel);
+                        aux = ler.next();
+                        grafo.criarVertice(aux);
                     }
+                    aux = "";
                     break;
                 case "2":
                     //criar arestas 
@@ -85,22 +88,24 @@ public class GeradorMenu {
                 case "8":
                     //Sumidouro
                     System.out.print("Digite o vertice: ");
-                    String x = ler.next();
-                    if (grafo.isSumidouro(x)) {
+                    aux = ler.next();
+                    if (grafo.isSumidouro(aux) != true) {
                         System.out.println("É sumidouro");
                     } else {
                         System.out.println("Nao e sumidouro");
                     }
+                    aux = "";
                     break;
                 case "9":
                     //Fonte
                     System.out.print("Digite o vertice: ");
-                    String y = ler.next();
-                    if (grafo.isFonte(y)) {
+                    aux = ler.next();
+                    if (grafo.isFonte(aux) != true) {
                         System.out.println("É fonte");
                     } else {
                         System.out.println("Nao e fonte");
                     }
+                    aux = "";
                     break;
                 case "10":
                     Boolean menu = true;
@@ -148,6 +153,22 @@ public class GeradorMenu {
                 case "18":
                     //ver se é regular
                     grafo.imprimeRegular();
+                    break;
+                case "19":
+                    //remover vértice
+                    System.out.println("Escolha um vértice para remover: ");
+                    System.out.println(grafo.listarVertice());
+                    aux = ler.next();
+                    grafo.removerVertice(aux);
+                    aux = "";
+                    break;
+                case "20":
+                    //remover aresta
+                    System.out.println("Escolha uma aresta para remover: ");
+                    System.out.println(grafo);
+                    aux = ler.next();
+                    grafo.removerAresta(aux);
+                    aux = "";
                     break;
                 case "0":
                     System.out.println("Saindo do programa...");

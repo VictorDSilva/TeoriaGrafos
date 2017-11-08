@@ -60,6 +60,15 @@ public class Grafo {
         return null;
     }
 
+    public Aresta buscaAresta(String id) {
+        for (Aresta a : arestas) {
+            if (a.getNome().equals(id)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
     public void setVertices(List<Vertice> vertices) {
         this.vertices = vertices;
     }
@@ -79,13 +88,12 @@ public class Grafo {
         return v;
     }
 
-    public void removerVertice(Vertice v) {
+    public void removerVertice(String nome) {
+        Vertice v = this.buscaVertice(nome);
         for (int i = 0; i < this.getArestas().size(); i++) {
-
             if (v.getId().equals(this.getArestas().get(i).getDestino().getId())
                     || v.getId().equals(this.getArestas().get(i).getOrigem().getId())) {
-
-                this.removerAresta(this.getArestas().get(i));
+                this.removerAresta(this.getArestas().get(i).getNome());
                 i--;
             }
         }
@@ -107,7 +115,8 @@ public class Grafo {
         }
     }
 
-    public void removerAresta(Aresta aresta) {
+    public void removerAresta(String nome) {
+        Aresta aresta = this.buscaAresta(nome);
         this.arestas.remove(aresta);
     }
 
@@ -383,8 +392,9 @@ public class Grafo {
     }
 
     public void grauVerticeEmissao() {
-        int cont = 0;
+        int cont;
         for (Vertice v : this.vertices) {
+            cont = 0;
             for (int i = 0; i < arestas.size(); i++) {
                 if (arestas.get(i).getOrigem() == v) {
                     cont++;
@@ -409,21 +419,27 @@ public class Grafo {
 //arrumar o buscavertive string
 
     public boolean isFonte(String node) {
+        if (arestas.isEmpty()) {
+            return false;
+        }
         for (Aresta aresta : arestas) {
             if (aresta.getDestino() == this.buscaVertice(node)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public boolean isSumidouro(String node) {
+        if (arestas.isEmpty()) {
+            return false;
+        }
         for (Aresta aresta : arestas) {
             if (aresta.getOrigem() == this.buscaVertice(node)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
