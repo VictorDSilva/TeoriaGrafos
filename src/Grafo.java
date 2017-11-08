@@ -91,8 +91,7 @@ public class Grafo {
     public void removerVertice(String nome) {
         Vertice v = this.buscaVertice(nome);
         for (int i = 0; i < this.getArestas().size(); i++) {
-            if (v.getId().equals(this.getArestas().get(i).getDestino().getId())
-                    || v.getId().equals(this.getArestas().get(i).getOrigem().getId())) {
+            if (v.getId().equals(this.getArestas().get(i).getDestino().getId()) || v.getId().equals(this.getArestas().get(i).getOrigem().getId())) {
                 this.removerAresta(this.getArestas().get(i).getNome());
                 i--;
             }

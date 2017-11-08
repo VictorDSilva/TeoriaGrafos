@@ -63,6 +63,7 @@ public class GeradorMenu {
                             System.out.println("Escolha um vértice para remover: ");
                             System.out.println(grafo.listarVertice());
                             aux = ler.next();
+                            System.out.print("Digite nome do vertice: ");
                             grafo.removerVertice(aux);
                             aux = "";
                             break;
@@ -70,6 +71,7 @@ public class GeradorMenu {
                             //remover aresta
                             System.out.println("Escolha uma aresta para remover: ");
                             System.out.println(grafo);
+                            System.out.print("Digite o nome da Aresta: ");
                             aux = ler.next();
                             grafo.removerAresta(aux);
                             aux = "";
@@ -78,20 +80,19 @@ public class GeradorMenu {
                     break;
                 case "2":
                     System.out.println("************************");
-                    System.out.println("1 - Ver Vértices");
-                    System.out.println("2 - Ver Grafo");
-                    System.out.println("3 - Verificar se é Sumidouro");
-                    System.out.println("4 - Veririficar se é Fonte");
-                    System.out.println("5 - Ordem do Grafo");
-                    System.out.println("6 - Grau de Emissão");
-                    System.out.println("7 - Grau de Recepção");
-                    System.out.println("8 - Ver Se é Multigrafo");
-                    System.out.println("9 - Ver Se é Completo");
+                    System.out.println("1 -  Ver Vértices");
+                    System.out.println("2 -  Ver Grafo");
+                    System.out.println("3 -  Verificar se é Sumidouro");
+                    System.out.println("4 -  Veririficar se é Fonte");
+                    System.out.println("5 -  Ordem do Grafo");
+                    System.out.println("6 -  Grau de Emissão");
+                    System.out.println("7 -  Grau de Recepção");
+                    System.out.println("8 -  Ver Se é Multigrafo");
+                    System.out.println("9 -  Ver Se é Completo");
                     System.out.println("10 - Ver Se é Regular");
                     System.out.println("11 - Ver matrizes Incidencia");
                     System.out.println("12 - Ver matrizes Adjascencia");
-                    System.out.println("13 - Ver Lista Incidencia");
-                    System.out.println("14 - Ver Lista Adjascencia");
+                    System.out.println("13 - Ver Lista Adjascencia");
                     System.out.println("************************");
                     System.out.print("Escolha uma opção: ");
                     opt2 = ler.next();                    
@@ -157,11 +158,8 @@ public class GeradorMenu {
                         case "12":
                             System.out.println("Matriz de Adjacencia");
                             grafo.imprimeMatrizAdjacencia();
-                            break;
+                            break;                     
                         case "13":
-                            //ver lista de incidencia
-                            break;
-                        case "14":
                             //ver lista de adjacencia
                             grafo.getListaAdjacencia();
                             break;
