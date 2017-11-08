@@ -316,8 +316,7 @@ public class Grafo {
      */
  /* METODOS DE MANIPULACAO DE VERTICE */
     public void criarVertice(String id) {
-        Vertice v = this.addVertice(id);
-
+        this.addVertice(id);
     }
 
     public String listarVertice() {
@@ -346,15 +345,13 @@ public class Grafo {
         ArrayList no1 = new ArrayList<>();
         for (int k = 0; k < getVertices().size() - 1; k++) {
             aux = Integer.toString(k); //converte int para String
-            buscaVertice(aux);
+            System.out.println(buscaVertice(aux));
         }
     }
 
     public void imprimeMatrizIncidencia() {
         String resultado = "";
-
         int matriz[][] = this.getMatrizIncidencia();
-
         for (int i = 0; i < vertices.size(); i++) {
             for (int j = 0; j < arestas.size(); j++) {
                 resultado += matriz[i][j] + "\t";
@@ -364,11 +361,9 @@ public class Grafo {
         System.out.println(resultado);
     }
 
-    public void imprimiAdjacencia() {
+    public void imprimeMatrizAdjacencia() {
         String resultado = "";
-
         int matriz[][] = this.getMatrizAdjacencia();
-
         for (int i = 0; i < vertices.size(); i++) {
             for (int j = 0; j < vertices.size(); j++) {
                 resultado += matriz[i][j] + "\t";
@@ -416,7 +411,6 @@ public class Grafo {
         }
         return cont;
     }
-//arrumar o buscavertive string
 
     public boolean isFonte(String node) {
         if (arestas.isEmpty()) {
@@ -462,7 +456,6 @@ public class Grafo {
                     || this.arestas.get(i).getOrigem().getId().equals(v1.getId())
                     && this.arestas.get(i).getDestino().getId().equals(v2.getId())) {
                 cont++;
-
             }
         }
         return cont;
