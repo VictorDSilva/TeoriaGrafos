@@ -295,6 +295,83 @@ public class Grafo {
         }
         return false;
     }
+    
+     /*private void Dijkstra(.ActionEvent evt) {                                                
+
+        Grafo g = grafo.copiaGrafo(grafo, grafo.getNome() + "-dijkstra");
+
+        List<Vertice> listaNosFechados = new ArrayList<>();
+
+        List<Vertice> listaNosAbertos = new ArrayList<>();
+        int qtNos = listaVertice.size();
+
+        int[][] matrizD = new int[qtNos][qtNos];
+
+        listaNosAbertos.addAll(listaVertice);
+
+        String verticeRaiz = JOptionPane.showInputDialog("Digite o vértice raiz:");
+
+        int[] tabelaD = new int[listaNosAbertos.size() - 1];
+
+        List<Vertice> lista = new ArrayList<>();
+        lista.addAll(listaNosAbertos);
+
+        for (int i = 0; i < tabelaD.length; i++) {
+            tabelaD[i] = Integer.MAX_VALUE;
+        }
+
+        Vertice vo = null;
+        while (listaNosAbertos.size() > 0) {
+            Vertice v = null;
+
+            int distanciaAnterior = 0;
+            if (listaNosFechados.size() == 0) {
+
+                v = Vertice.getVerticeById(verticeRaiz, listaNosAbertos);
+                vo = v;
+            } else {
+                v = listaNosAbertos.get(0);
+
+            }
+            listaNosFechados.add(v);
+            listaNosAbertos.remove(v);
+
+            if (v != vo) {
+                distanciaAnterior = tabelaD[listaNosFechados.size() - 2];
+                if (distanciaAnterior == Integer.MAX_VALUE) {
+                    distanciaAnterior = 0;
+                }
+
+            }
+
+            int i = listaNosFechados.size() - 1;
+            for (Vertice a : listaNosAbertos) {
+                Aresta a1 = Aresta.getArestaByVertices(v, a, listaAresta);
+                if (a1 == null) {
+
+                } else if (tabelaD[i] > a1.getValor() + distanciaAnterior) {
+                    tabelaD[i] = a1.getValor() + distanciaAnterior;
+                }
+                i++;
+            }
+
+            for (int j = 0; j < tabelaD.length; j++) {
+                System.out.print(tabelaD[j] + "- ");
+            }
+            System.out.println("");
+
+        }
+
+        int p = 1;
+        String imprime = "";
+        for (int j = 0; j < tabelaD.length; j++) {
+            imprime += "(" + verticeRaiz + " , " + lista.get(p).getId() + ") = " + tabelaD[j] + "\n";
+            p++;
+        }
+
+        //JOptionPane.showMessageDialog(null, "Caminho Minímo:\n" + imprime);
+        // TODO add your handling code here:
+    }
 
 
     /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
