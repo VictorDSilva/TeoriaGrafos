@@ -1,21 +1,20 @@
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Dijkstra {
 
-    private Graph graph;
+    private Grafo grafo;
     private HashMap<String, Float> distancias;
 
-    public Dijkstra(Graph graph) {
-        this.graph = graph;
+    public Dijkstra(Grafo grafo) {
+        this.grafo = grafo;
         this.distancias = new HashMap();
     }
 
-    public Dijkstra(Graphml graphml) {
-        this.graph = graphml.getGraph();
+    public Dijkstra(Graphml grafoml) {
+        this.grafo = grafo.getGraph();
         this.distancias = new HashMap();
     }
 
@@ -23,41 +22,41 @@ public class Dijkstra {
 
     }
 
-    public void execute(Node source) {
+    public void execute(Vertice source) {
         int i;
 
-        for (i = 0; i < this.graph.getNodes().size(); i++) {
-            this.distancias.put(graph.getNodes().get(i).getId(), Float.MAX_VALUE);
+        for (i = 0; i < this.grafo.getVertices().size(); i++) {
+            this.distancias.put(grafo.getVertices().get(i).getId(), Float.MAX_VALUE);
         }
 
-        int indice = this.graph.getIndiceNodePorId(source.getId());
-        this.distancias.put(this.graph.getNodes().get(indice).getId(), 0F);
-        ArrayList<Node> nosJaVisitados = new ArrayList();
-        nosJaVisitados.add(this.graph.getNodes().get(indice));
-        visitarTodosNos(this.graph.getNodes().get(indice).getId(), 0, nosJaVisitados);
+        int indice = this.grafo.getIndiceVerticePorId(source.getId());
+        this.distancias.put(this.grafo.getVertices().get(indice).getId(), 0F);
+        ArrayList<Vertice> nosJaVisitados = new ArrayList();
+        nosJaVisitados.add(this.grafo.getVertices().get(indice));
+        visitarTodosNos(this.grafo.getVertices().get(indice).getId(), 0, nosJaVisitados);
     }
 
     private float calcularDistancia(String inicioId, String alvoId) {
         int i;
-        for (i = 0; i < this.graph.getEdges().size(); i++) {
-            if (this.graph.getEdges().get(i).getDirected()) {
-                if (this.graph.getEdges().get(i).getSource().getId().equals(inicioId) && this.graph.getEdges().get(i).getTarget().getId().equals(alvoId)) {
-                    return Float.parseFloat(this.graph.getEdges().get(i).getData().getData());
+        for (i = 0; i < this.grafo.getArestas().size(); i++) {
+            if (this.grafo.getArestas().get(i).getDirected()) {
+                if (this.grafo.getArestas().get(i).getOrigem().getId().equals(inicioId) && this.grafo.getArestas().get(i).getTarget().getId().equals(alvoId)) {
+                    return Float.parseFloat(this.grafo.getArestas().get(i).getData().getData());
                 }
-            } else if ((this.graph.getEdges().get(i).getSource().getId().equals(inicioId) && this.graph.getEdges().get(i).getTarget().getId().equals(alvoId))
-                    || (this.graph.getEdges().get(i).getSource().getId().equals(alvoId) && this.graph.getEdges().get(i).getTarget().getId().equals(inicioId))) {
-                return Float.parseFloat(this.graph.getEdges().get(i).getData().getData());
+            } else if ((this.grafo.getArestas().get(i).getOrigem().getId().equals(inicioId) && this.grafo.getArestas().get(i).getTarget().getId().equals(alvoId))
+                    || (this.grafo.getArestas().get(i).getOrigem().getId().equals(alvoId) && this.grafo.getArestas().get(i).getTarget().getId().equals(inicioId))) {
+                return Float.parseFloat(this.grafo.getArestas().get(i).getData().getData());
             }
         }
         return Float.MAX_VALUE;
     }
 
-    private void visitarTodosNos(String noId, float distanciaAnterior, ArrayList<Node> nosJaVisitados) {
+    private void visitarTodosNos(String noId, float distanciaAnterior, ArrayList<Vertice> nosJaVisitados) {
 
-        ArrayList<Node> alcancaveis;
+        ArrayList<Vertice> alcancaveis;
         int indice, i;
-        indice = this.graph.getIndiceNodePorId(noId);
-        alcancaveis = this.graph.getNosAdjacentes(this.graph.getNodes().get(indice));
+        indice = this.grafo.getIndiceVerticePorId(noId);
+        alcancaveis = this.grafo.getAdjacentes(this.grafo.getVertices().get(indice));
         alcancaveis.removeAll(nosJaVisitados);
 
         for (i = 0; i < alcancaveis.size(); i++) {
@@ -75,7 +74,7 @@ public class Dijkstra {
         }
     }
 
-    public float menorDistancia(Node destino) {
+    public float menorDistancia(Vertice destino) {
         if (this.distancias.get(destino.getId()) != null) {
             return this.distancias.get(destino.getId());
         } else {
@@ -87,8 +86,8 @@ public class Dijkstra {
         return this.distancias;
     }
 
-    public Graph getGraph() {
-        return this.graph;
+    public Grafo getGraph() {
+        return this.grafo;
     }
 
 }
