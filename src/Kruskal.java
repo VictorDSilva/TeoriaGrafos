@@ -57,9 +57,7 @@ public class Kruskal {
             }
         }
 
-        // grafo.setGrafo(arestasParaArvore(arvore));
-        return grafo;
-
+        return  arestasParaArvore(arvore);
     }
 
     private boolean comparaPais(String origem, String destino) {

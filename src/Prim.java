@@ -72,6 +72,7 @@ public class Prim {
                 min = chave[vertice];
             }
         }
+        return min;
     }
 
     public void avaliacao_vizinhos(int vertice_avaliacao) {

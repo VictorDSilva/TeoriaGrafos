@@ -249,23 +249,23 @@ public class Grafo {
     public boolean cadeia(String inicio, String destino) {
         ArrayList<Aresta> arestasFound = new ArrayList<>();
         ArrayList<Vertice> nodesFound = new ArrayList<>();
-        ArrayList<Vertice> newNodesFound = new ArrayList<>();
+        ArrayList<Vertice> newVerticesFound = new ArrayList<>();
 
         for (Aresta aresta : arestas) {
             if (!nodesFound.contains(aresta.getOrigem()) && !nodesFound.contains(aresta.getDestino())) {
                 if (aresta.getOrigem() == buscaVertice(inicio)) {
                     arestasFound.add(aresta);
-                    newNodesFound.add(aresta.getDestino());
+                    newVerticesFound.add(aresta.getDestino());
                 }
                 if (aresta.getDestino() == buscaVertice(inicio)) {
                     arestasFound.add(aresta);
-                    newNodesFound.add(aresta.getOrigem());
+                    newVerticesFound.add(aresta.getOrigem());
                 }
             }
         }
 
         nodesFound.add(buscaVertice(inicio));
-        for (Vertice n : newNodesFound) {
+        for (Vertice n : newVerticesFound) {
             if (!nodesFound.contains(n)) {
                 nodesFound.add(n);
             }
@@ -273,7 +273,7 @@ public class Grafo {
 
         while (arestasFound.size() >= 1) {
             ArrayList<Aresta> newArestasFound = new ArrayList<>();
-            newNodesFound = new ArrayList<>();
+            newVerticesFound = new ArrayList<>();
             int nodesFoundSize = nodesFound.size();
             for (Aresta arestaFound : arestasFound) {
                 for (Aresta aresta : arestas) {
@@ -282,24 +282,24 @@ public class Grafo {
                     }
                     if (arestaFound.getDestino() == aresta.getOrigem()) {
                         newArestasFound.add(aresta);
-                        newNodesFound.add(aresta.getDestino());
+                        newVerticesFound.add(aresta.getDestino());
                     }
                     if (arestaFound.getDestino() == aresta.getDestino()) {
                         newArestasFound.add(aresta);
-                        newNodesFound.add(aresta.getOrigem());
+                        newVerticesFound.add(aresta.getOrigem());
                     }
                     if (arestaFound.getOrigem() == aresta.getOrigem()) {
                         newArestasFound.add(aresta);
-                        newNodesFound.add(aresta.getDestino());
+                        newVerticesFound.add(aresta.getDestino());
                     }
                     if (arestaFound.getOrigem() == aresta.getDestino()) {
                         newArestasFound.add(aresta);
-                        newNodesFound.add(aresta.getOrigem());
+                        newVerticesFound.add(aresta.getOrigem());
                     }
 
                 }
             }
-            for (Vertice n : newNodesFound) {
+            for (Vertice n : newVerticesFound) {
                 if (!nodesFound.contains(n)) {
                     nodesFound.add(n);
                 }
@@ -312,101 +312,8 @@ public class Grafo {
         return false;
     }
 
-    /*private void Dijkstra(.ActionEvent evt) {                                                
 
-        Grafo g = grafo.copiaGrafo(grafo, grafo.getNome() + "-dijkstra");
-
-        List<Vertice> listaNosFechados = new ArrayList<>();
-
-        List<Vertice> listaNosAbertos = new ArrayList<>();
-        int qtNos = listaVertice.size();
-
-        int[][] matrizD = new int[qtNos][qtNos];
-
-        listaNosAbertos.addAll(listaVertice);
-
-        String verticeRaiz = JOptionPane.showInputDialog("Digite o vértice raiz:");
-
-        int[] tabelaD = new int[listaNosAbertos.size() - 1];
-
-        List<Vertice> lista = new ArrayList<>();
-        lista.addAll(listaNosAbertos);
-
-        for (int i = 0; i < tabelaD.length; i++) {
-            tabelaD[i] = Integer.MAX_VALUE;
-        }
-
-        Vertice vo = null;
-        while (listaNosAbertos.size() > 0) {
-            Vertice v = null;
-
-            int distanciaAnterior = 0;
-            if (listaNosFechados.size() == 0) {
-
-                v = Vertice.getVerticeById(verticeRaiz, listaNosAbertos);
-                vo = v;
-            } else {
-                v = listaNosAbertos.get(0);
-
-            }
-            listaNosFechados.add(v);
-            listaNosAbertos.remove(v);
-
-            if (v != vo) {
-                distanciaAnterior = tabelaD[listaNosFechados.size() - 2];
-                if (distanciaAnterior == Integer.MAX_VALUE) {
-                    distanciaAnterior = 0;
-                }
-
-            }
-
-            int i = listaNosFechados.size() - 1;
-            for (Vertice a : listaNosAbertos) {
-                Aresta a1 = Aresta.getArestaByVertices(v, a, listaAresta);
-                if (a1 == null) {
-
-                } else if (tabelaD[i] > a1.getValor() + distanciaAnterior) {
-                    tabelaD[i] = a1.getValor() + distanciaAnterior;
-                }
-                i++;
-            }
-
-            for (int j = 0; j < tabelaD.length; j++) {
-                System.out.print(tabelaD[j] + "- ");
-            }
-            System.out.println("");
-
-        }
-
-        int p = 1;
-        String imprime = "";
-        for (int j = 0; j < tabelaD.length; j++) {
-            imprime += "(" + verticeRaiz + " , " + lista.get(p).getId() + ") = " + tabelaD[j] + "\n";
-            p++;
-        }
-
-        //JOptionPane.showMessageDialog(null, "Caminho Minímo:\n" + imprime);
-        // TODO add your handling code here:
-    }
-
-
-    /*   V[G] é o conjunto de vértices(v) que formam o Grafo G. d[v] é o vetor de distâncias de s até cada v. 
-    Admitindo-se a pior estimativa possível, o caminho infinito. π[v] identifica o vértice de onde se origina 
-    uma conexão até v de maneira a formar um caminho mínimo.
-        
-    2º passo: temos que usar o conjunto Q, cujos vértices ainda não contém o custo do menor caminho d[v] determinado.
-        Q ← V[G]
-        
-    3º passo: realizamos uma série de relaxamentos das arestas, de acordo com o código:
-        enquanto Q ≠ ø
-         u ← extrair-mín(Q)                     //Q ← Q - {u}
-         para cada v adjacente a u
-              se d[v] > d[u] + w(u, v)          //relaxe (u, v)
-                 então d[v] ← d[u] + w(u, v)
-                       π[v] ← u
-    
-     */
- /* METODOS DE MANIPULACAO DE VERTICE */
+    /* METODOS DE MANIPULACAO DE VERTICE */
     public void criarVertice(String id) {
         this.addVertice(id);
     }
@@ -432,13 +339,26 @@ public class Grafo {
         }
     }
 
-    public void getListaAdjacencia() {
+    public ArrayList<Vertice> getListaAdjacencia(Vertice no1) {
+        ArrayList<Vertice> adjacentes = new ArrayList<>();
+        String aux = "";
+        for (int k = 0; k < getVertices().size() - 1; k++) {
+            aux = Integer.toString(k); //converte int para String
+            System.out.println(buscaVertice(aux));
+        }
+        return adjacentes;
+    }
+
+    public ArrayList<Vertice> getListaAdjacencia() {
+        ArrayList<Vertice> adjacentes = new ArrayList<>();
+
         String aux = "";
         ArrayList no1 = new ArrayList<>();
         for (int k = 0; k < getVertices().size() - 1; k++) {
             aux = Integer.toString(k); //converte int para String
             System.out.println(buscaVertice(aux));
         }
+        return adjacentes;
     }
 
     public void imprimeMatrizIncidencia() {
