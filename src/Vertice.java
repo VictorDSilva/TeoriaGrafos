@@ -9,7 +9,7 @@ import java.util.List;
 public class Vertice {
 
     private String id;
-    private List<Aresta> adj;
+    private ArrayList<Aresta> adj;
 
     Vertice(String id) {
         this.id = id;
@@ -36,7 +36,7 @@ public class Vertice {
         return adj;
     }
 
-    public void setAdj(List<Aresta> adj) {
+    public void setAdj(ArrayList<Aresta> adj) {
         this.adj = adj;
     }
 

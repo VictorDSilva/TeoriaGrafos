@@ -62,11 +62,11 @@ public class Dijkstra {
         for (i = 0; i < alcancaveis.size(); i++) {
             float distancia = calcularDistancia(noId, alcancaveis.get(i).getId());
 
-            if (distancia+distanciaAnterior < this.distancias.get(alcancaveis.get(i).getId())) {
-                this.distancias.put(alcancaveis.get(i).getId(), distancia+distanciaAnterior);
+            if (distancia + distanciaAnterior < this.distancias.get(alcancaveis.get(i).getId())) {
+                this.distancias.put(alcancaveis.get(i).getId(), distancia + distanciaAnterior);
             }
         }
-        
+
         for (i = 0; i < alcancaveis.size(); i++) {
             nosJaVisitados.add(alcancaveis.get(i));
             visitarTodosNos(alcancaveis.get(i).getId(), this.distancias.get(alcancaveis.get(i).getId()), nosJaVisitados);

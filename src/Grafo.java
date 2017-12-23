@@ -13,10 +13,11 @@ import java.util.List;
  */
 public class Grafo {
 
-    private List<Vertice> vertices;
-    private List<Aresta> arestas;
+    private ArrayList<Vertice> vertices;
+    private ArrayList<Aresta> arestas;
     private boolean orientado;
     private String id;
+    private String arestaPadrao;
 
     public Grafo() {
         this.vertices = new ArrayList<Vertice>();
@@ -29,6 +30,21 @@ public class Grafo {
         this.vertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
         this.orientado = orientado;
+    }
+
+    public Grafo(String id, String arestaPadrao, ArrayList<Vertice> vertices, ArrayList<Aresta> arestas) {
+        this.id = id;
+        this.arestaPadrao = arestaPadrao;
+        this.vertices = vertices;
+        this.arestas = arestas;
+    }
+
+    public String getArestaPadrao() {
+        return arestaPadrao;
+    }
+
+    public void setArestaPadrao(String arestaPadrao) {
+        this.arestaPadrao = arestaPadrao;
     }
 
     public boolean isOrientado() {
@@ -47,7 +63,7 @@ public class Grafo {
         this.id = id;
     }
 
-    public List<Vertice> getVertices() {
+    public ArrayList<Vertice> getVertices() {
         return vertices;
     }
 
@@ -69,15 +85,15 @@ public class Grafo {
         return null;
     }
 
-    public void setVertices(List<Vertice> vertices) {
+    public void setVertices(ArrayList<Vertice> vertices) {
         this.vertices = vertices;
     }
 
-    public List<Aresta> getArestas() {
+    public ArrayList<Aresta> getArestas() {
         return arestas;
     }
 
-    public void setArestas(List<Aresta> arestas) {
+    public void setArestas(ArrayList<Aresta> arestas) {
         this.arestas = arestas;
     }
 
@@ -295,8 +311,8 @@ public class Grafo {
         }
         return false;
     }
-    
-     /*private void Dijkstra(.ActionEvent evt) {                                                
+
+    /*private void Dijkstra(.ActionEvent evt) {                                                
 
         Grafo g = grafo.copiaGrafo(grafo, grafo.getNome() + "-dijkstra");
 

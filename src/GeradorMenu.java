@@ -95,7 +95,7 @@ public class GeradorMenu {
                     System.out.println("13 - Ver Lista Adjascencia");
                     System.out.println("************************");
                     System.out.print("Escolha uma opção: ");
-                    opt2 = ler.next();                    
+                    opt2 = ler.next();
                     switch (opt2) {
                         case "1":
                             //ver vértices 
@@ -158,7 +158,7 @@ public class GeradorMenu {
                         case "12":
                             System.out.println("Matriz de Adjacencia");
                             grafo.imprimeMatrizAdjacencia();
-                            break;                     
+                            break;
                         case "13":
                             //ver lista de adjacencia
                             grafo.getListaAdjacencia();
