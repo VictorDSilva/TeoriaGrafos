@@ -1,4 +1,6 @@
 
+import br.com.davesmartins.graphviewlib.ViewGraph;
+import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
 import java.util.Scanner;
 
 /**
@@ -19,6 +21,7 @@ public class GeradorMenu {
             System.out.println("1 - Manipular Grafo");
             System.out.println("2 - Vizualizar Grafo");
             System.out.println("3 - XML");
+            System.out.println("4 - Imagem");
             System.out.println("0 - Sair do programa");
             System.out.println("************************");
             System.out.print("Escolha uma opção: ");
@@ -193,6 +196,15 @@ public class GeradorMenu {
                             break;
                     }
                     break;
+                case "4":
+
+                    try {
+                        ViewGraph.generateViewGraphByFrame("grafo.xml");
+                    } catch (EGraphViewExcpetion ex) {
+                        System.out.println("-->" + ex.getMensagem());
+                    }
+                    break;
+
                 case "0":
                     System.out.println("Saindo do programa...");
                     opt = "0";
