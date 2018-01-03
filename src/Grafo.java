@@ -547,7 +547,7 @@ public class Grafo {
             }
 
             for (Aresta aresta : this.getArestas()) {
-                gravarArquivo.printf("      <aresta source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
+                gravarArquivo.printf("      <edge source='" + aresta.getOrigem().getId() + "' target='" + aresta.getDestino().getId() + "'/>\n");
             }
 
             gravarArquivo.printf("  </graph>\n");
