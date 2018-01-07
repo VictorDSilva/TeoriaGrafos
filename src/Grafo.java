@@ -529,9 +529,9 @@ public class Grafo {
     }
 
     /* METODOS DE XML */
-    public void gravarXML() {
+    public void gravarXML(String nome) {
         try {
-            FileWriter arquivo = new FileWriter("grafo.xml");
+            FileWriter arquivo = new FileWriter(nome+".xml");
             PrintWriter gravarArquivo = new PrintWriter(arquivo);
 
             gravarArquivo.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -554,6 +554,8 @@ public class Grafo {
             gravarArquivo.printf("</graphml>");
 
             arquivo.close();
+
+            System.out.println("XML salvo.\n");
         } catch (IOException ex) {
             System.out.println("Erro ao gerar XML!");
         }

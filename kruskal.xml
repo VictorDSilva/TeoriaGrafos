@@ -18,10 +18,7 @@
       <edge source='d' target='e'/>
       <edge source='f' target='g'/>
       <edge source='i' target='h'/>
-      <edge source='a' target='b'/>
       <edge source='c' target='d'/>
-      <edge source='e' target='d'/>
       <edge source='f' target='a'/>
-      <edge source='h' target='i'/>
   </graph>
 </graphml>
