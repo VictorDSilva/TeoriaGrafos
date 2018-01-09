@@ -10,7 +10,7 @@ public class ComparaAresta implements Comparator {
         if (aresta1.getPeso() > aresta2.getPeso()) {
             return 1;
         }
-        if (aresta1.getPeso() > aresta2.getPeso()) {
+        if (aresta1.getPeso() < aresta2.getPeso()) {
             return -1;
         }
         return 0;

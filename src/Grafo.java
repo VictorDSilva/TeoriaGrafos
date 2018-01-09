@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -23,7 +22,6 @@ public class Grafo {
         this.vertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
         this.orientado = false;
-
     }
 
     public Grafo(boolean orientado) {
@@ -341,22 +339,12 @@ public class Grafo {
 
     public ArrayList<Vertice> getListaAdjacencia(Vertice no1) {
         ArrayList<Vertice> adjacentes = new ArrayList<>();
-        String aux = "";
+        //nao faz sentido ess metodo
+        //ele precisa verificar quem é seu adjacente e adicionar a lista
+        //gera menu esta certo arrumar AQUI
         for (int k = 0; k < getVertices().size() - 1; k++) {
-            aux = Integer.toString(k); //converte int para String
-            System.out.println(buscaVertice(aux));
-        }
-        return adjacentes;
-    }
-
-    public ArrayList<Vertice> getListaAdjacencia() {
-        ArrayList<Vertice> adjacentes = new ArrayList<>();
-
-        String aux = "";
-        ArrayList no1 = new ArrayList<>();
-        for (int k = 0; k < getVertices().size() - 1; k++) {
-            aux = Integer.toString(k); //converte int para String
-            System.out.println(buscaVertice(aux));
+            adjacentes.add(buscaVertice(getVertices().get(k).getId()));
+            System.out.print(buscaVertice(getVertices().get(k).getId()).getId());
         }
         return adjacentes;
     }
@@ -473,6 +461,15 @@ public class Grafo {
         return cont;
     }
 
+    public String listarAresta() {
+        String r = "";
+        for (Aresta u : this.getArestas()) {
+            r += "Aresta: " + u.getNome();
+            r += "\n";
+        }
+        return r;
+    }
+
     /* MANIPULACAO DO GRAFO */
     public int isRegular() {
         int grau = -1;
@@ -531,7 +528,7 @@ public class Grafo {
     /* METODOS DE XML */
     public void gravarXML(String nome) {
         try {
-            FileWriter arquivo = new FileWriter(nome+".xml");
+            FileWriter arquivo = new FileWriter(nome + ".xml");
             PrintWriter gravarArquivo = new PrintWriter(arquivo);
 
             gravarArquivo.printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");

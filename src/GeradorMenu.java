@@ -57,7 +57,7 @@ public class GeradorMenu {
                         opt3 = ler.next();
                         if (opt3 == "s" || opt3 == "S") {
                             gerarImagem("kruskal");
-                        }else {
+                        } else {
                             break;
                         }
                     } else {
@@ -83,7 +83,7 @@ public class GeradorMenu {
         System.out.println("1 - Criar Vértice");
         System.out.println("2 - Criar Aresta");
         System.out.println("3 - Remover Vértice");
-        System.out.println("4 - Remover  Aresta");
+        System.out.println("4 - Remover Aresta");
         System.out.println("************************");
         System.out.print("Escolha uma opção: ");
         opt2 = ler.next();
@@ -116,15 +116,15 @@ public class GeradorMenu {
                 //remover vértice
                 System.out.println("Escolha um vértice para remover: ");
                 System.out.println(grafo.listarVertice());
-                aux = ler.next();
                 System.out.print("Digite nome do vertice: ");
+                aux = ler.next();
                 grafo.removerVertice(aux);
                 aux = "";
                 break;
             case "4":
                 //remover aresta
                 System.out.println("Escolha uma aresta para remover: ");
-                System.out.println(grafo);
+                System.out.println(grafo.listarAresta());
                 System.out.print("Digite o nome da Aresta: ");
                 aux = ler.next();
                 grafo.removerAresta(aux);
@@ -138,7 +138,7 @@ public class GeradorMenu {
         int qtd = 0;
         System.out.println("************************");
         System.out.println("1 -  Ver Vértices");
-        System.out.println("2 -  Ver Grafo");
+        System.out.println("2 -  Ver Aresta");
         System.out.println("3 -  Ver Se é Sumidouro");
         System.out.println("4 -  Ver Se é Fonte");
         System.out.println("5 -  Ver Ordem do Grafo");
@@ -160,7 +160,7 @@ public class GeradorMenu {
                 break;
             case "2":
                 //ver grafo
-                System.out.println(grafo);
+                System.out.println(grafo.listarAresta());
                 break;
             case "3":
                 //Sumidouro
@@ -218,7 +218,12 @@ public class GeradorMenu {
                 break;
             case "13":
                 //ver lista de adjacencia
-                grafo.getListaAdjacencia();
+                grafo.getVertices().forEach((v)
+                        -> {
+                    System.out.println(v.getId());
+                    grafo.getListaAdjacencia(v);
+                });
+                //System.out.println(grafo.getListaAdjacencia());
                 break;
         }
     }

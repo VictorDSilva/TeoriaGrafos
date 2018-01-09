@@ -36,40 +36,6 @@ public class Kruskal {
         this.vertices = vertices;
     }
 
-    public Grafo getKruskal(Grafo grafoml) {
-        this.grafo = grafoml;
-
-        //Varre a lista de vertices e armazena os ids na lista de verticesId
-        vertices = grafo.getVertices();
-        for (int i = 0; i < vertices.size(); i++) {
-            verticesId.add(grafo.getVertices().get(i).getId());
-        }
-
-        ArrayList<Aresta> arvore = new ArrayList<Aresta>();
-
-        for (int i = 0; i < vertices.size(); i++) {
-            ArrayList<String> listaAux = new ArrayList<String>();
-            listaAux.add(grafo.getVertices().get(i).getId());
-            listaPais.add(listaAux);
-        }
-
-        ComparaAresta comparador = new ComparaAresta();
-
-        arestas = (ArrayList<Aresta>) grafo.getArestas().clone();
-        Collections.sort(arestas, comparador);
-
-        for (int i = 0; i < arestas.size(); i++) {
-
-            if (comparaPais(arestas.get(i).getOrigem().getId(), arestas.get(i).getDestino().getId())) {
-                arvore.add(arestas.get(i));
-                unir(arestas.get(i).getOrigem(), arestas.get(i).getDestino());
-                unir(arestas.get(i).getDestino(), arestas.get(i).getOrigem());
-            }
-        }
-
-        return arestasParaArvore(arvore);
-    }
-
     public Grafo getKruskal() {
         //Varre a lista de vertices e armazena os ids na lista de verticesId
         for (int i = 0; i < vertices.size(); i++) {
