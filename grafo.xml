@@ -6,8 +6,9 @@
   <graph id='1' arestadefault='direcao'>
       <node id='a'/>
       <node id='b'/>
-      <node id='c'/>
-      <node id='d'/>
-      <edge source='c' target='d'/>
+      <node id='cc'/>
+      <edge source='a' target='b'/>
+      <edge source='a' target='cc'/>
+      <edge source='b' target='cc'/>
   </graph>
 </graphml>

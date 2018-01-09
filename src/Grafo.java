@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  *
@@ -12,28 +14,28 @@ import java.util.ArrayList;
  */
 public class Grafo {
 
-    private ArrayList<Vertice> vertices;
+    private ArrayList<Vertice> listaVertices;
     private ArrayList<Aresta> arestas;
     private boolean orientado;
     private String id;
     private String arestaPadrao;
 
     public Grafo() {
-        this.vertices = new ArrayList<Vertice>();
+        this.listaVertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
         this.orientado = false;
     }
 
     public Grafo(boolean orientado) {
-        this.vertices = new ArrayList<Vertice>();
+        this.listaVertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
         this.orientado = orientado;
     }
 
-    public Grafo(String id, String arestaPadrao, ArrayList<Vertice> vertices, ArrayList<Aresta> arestas) {
+    public Grafo(String id, String arestaPadrao, ArrayList<Vertice> listaVertices, ArrayList<Aresta> arestas) {
         this.id = id;
         this.arestaPadrao = arestaPadrao;
-        this.vertices = vertices;
+        this.listaVertices = listaVertices;
         this.arestas = arestas;
     }
 
@@ -62,11 +64,11 @@ public class Grafo {
     }
 
     public ArrayList<Vertice> getVertices() {
-        return vertices;
+        return listaVertices;
     }
 
     public Vertice buscaVertice(String id) {
-        for (Vertice v : vertices) {
+        for (Vertice v : listaVertices) {
             if (v.getId().equals(id)) {
                 return v;
             }
@@ -83,8 +85,8 @@ public class Grafo {
         return null;
     }
 
-    public void setVertices(ArrayList<Vertice> vertices) {
-        this.vertices = vertices;
+    public void setVertices(ArrayList<Vertice> listaVertices) {
+        this.listaVertices = listaVertices;
     }
 
     public ArrayList<Aresta> getArestas() {
@@ -98,7 +100,7 @@ public class Grafo {
     /* METODOS DE MANIPULACAO DO GRAFO */
     public Vertice addVertice(String id) {
         Vertice v = new Vertice(id);
-        this.vertices.add(v);
+        this.listaVertices.add(v);
         return v;
     }
 
@@ -110,18 +112,18 @@ public class Grafo {
                 i--;
             }
         }
-        this.vertices.remove(v);
+        this.listaVertices.remove(v);
     }
 
-    public Aresta addAresta(Vertice origem, Vertice destino) {
+    public Aresta addAresta(Vertice origem, Vertice destino, int peso) {
         if (this.isOrientado()) {
-            Aresta e = new Aresta(origem, destino);
+            Aresta e = new Aresta(origem, destino, peso);
             origem.addAdj(e);
             destino.addAdj(e);
             this.arestas.add(e);
             return e;
         } else {
-            Aresta e = new Aresta(origem, destino);
+            Aresta e = new Aresta(origem, destino, peso);
             origem.addAdj(e);
             this.arestas.add(e);
             return e;
@@ -137,7 +139,7 @@ public class Grafo {
     public String toString() {
         String r = "";
 
-        for (Vertice u : this.vertices) {
+        for (Vertice u : this.listaVertices) {
             r += u.getId() + " -> ";
 
             for (Aresta e : u.getAdj()) {
@@ -246,11 +248,11 @@ public class Grafo {
 
     public boolean cadeia(String inicio, String destino) {
         ArrayList<Aresta> arestasFound = new ArrayList<>();
-        ArrayList<Vertice> nodesFound = new ArrayList<>();
+        ArrayList<Vertice> verticesFound = new ArrayList<>();
         ArrayList<Vertice> newVerticesFound = new ArrayList<>();
 
         for (Aresta aresta : arestas) {
-            if (!nodesFound.contains(aresta.getOrigem()) && !nodesFound.contains(aresta.getDestino())) {
+            if (!verticesFound.contains(aresta.getOrigem()) && !verticesFound.contains(aresta.getDestino())) {
                 if (aresta.getOrigem() == buscaVertice(inicio)) {
                     arestasFound.add(aresta);
                     newVerticesFound.add(aresta.getDestino());
@@ -262,17 +264,17 @@ public class Grafo {
             }
         }
 
-        nodesFound.add(buscaVertice(inicio));
+        verticesFound.add(buscaVertice(inicio));
         for (Vertice n : newVerticesFound) {
-            if (!nodesFound.contains(n)) {
-                nodesFound.add(n);
+            if (!verticesFound.contains(n)) {
+                verticesFound.add(n);
             }
         }
 
         while (arestasFound.size() >= 1) {
             ArrayList<Aresta> newArestasFound = new ArrayList<>();
             newVerticesFound = new ArrayList<>();
-            int nodesFoundSize = nodesFound.size();
+            int verticesFoundSize = verticesFound.size();
             for (Aresta arestaFound : arestasFound) {
                 for (Aresta aresta : arestas) {
                     if (arestaFound.getDestino() == buscaVertice(destino) || arestaFound.getOrigem() == buscaVertice(destino)) {
@@ -298,12 +300,12 @@ public class Grafo {
                 }
             }
             for (Vertice n : newVerticesFound) {
-                if (!nodesFound.contains(n)) {
-                    nodesFound.add(n);
+                if (!verticesFound.contains(n)) {
+                    verticesFound.add(n);
                 }
             }
             arestasFound = newArestasFound;
-            if (nodesFoundSize == nodesFound.size()) {
+            if (verticesFoundSize == verticesFound.size()) {
                 return false;
             }
         }
@@ -331,28 +333,63 @@ public class Grafo {
 
     public void getIncidencia() {
         for (int i = 0; i <= getArestas().size() - 1; i++) {
-            System.out.println("Os vertices: " + getArestas().get(i).getOrigem().getId()
+            System.out.println("Os listaVertices: " + getArestas().get(i).getOrigem().getId()
                     + " e " + getArestas().get(i).getDestino().getId() + " são incidentes a aresta: "
                     + getArestas().get(i).getNome());
         }
     }
 
-    public ArrayList<Vertice> getListaAdjacencia(Vertice no1) {
-        ArrayList<Vertice> adjacentes = new ArrayList<>();
-        //nao faz sentido ess metodo
-        //ele precisa verificar quem é seu adjacente e adicionar a lista
-        //gera menu esta certo arrumar AQUI
-        for (int k = 0; k < getVertices().size() - 1; k++) {
-            adjacentes.add(buscaVertice(getVertices().get(k).getId()));
-            System.out.print(buscaVertice(getVertices().get(k).getId()).getId());
+    public ArrayList<Vertice> getListaAdjacencia(Vertice no) {
+        //Nao tenho certeza se é a implementacao mais ideal 
+        //para pegar a lista de apenas um vertice
+        ArrayList<Vertice> verticesAdjacentes = new ArrayList<>();
+
+        for (Vertice n2 : this.listaVertices) {
+            if (verticeAdjacenteLista(no.getId(), n2.getId())) {
+                verticesAdjacentes.add(n2);
+            }
         }
-        return adjacentes;
+        return verticesAdjacentes;
+    }
+
+    public void listaAdjacencias() {
+        HashMap<Vertice, ArrayList<Vertice>> listaVertices = new HashMap<>();
+
+        for (Vertice n1 : this.listaVertices) {
+            ArrayList<Vertice> verticesAdjacentes = new ArrayList<>();
+            for (Vertice n2 : this.listaVertices) {
+                if (verticeAdjacenteLista(n1.getId(), n2.getId())) {
+                    verticesAdjacentes.add(n2);
+                }
+            }
+            listaVertices.put(n1, verticesAdjacentes);
+        }
+
+        Set<Vertice> keys = listaVertices.keySet();
+
+        for (Vertice key : keys) {
+            System.out.print(key.getId() + " -> ");
+            for (int j = 0; j < listaVertices.get(key).size(); j++) {
+
+                System.out.print(listaVertices.get(key).get(j).getId() + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public boolean verticeAdjacenteLista(String source, String target) {
+        for (Aresta a : arestas) {
+            if ((a.getOrigem() == buscaVertice(source) && a.getDestino() == buscaVertice(target))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void imprimeMatrizIncidencia() {
         String resultado = "";
         int matriz[][] = this.getMatrizIncidencia();
-        for (int i = 0; i < vertices.size(); i++) {
+        for (int i = 0; i < listaVertices.size(); i++) {
             for (int j = 0; j < arestas.size(); j++) {
                 resultado += matriz[i][j] + "\t";
             }
@@ -364,8 +401,8 @@ public class Grafo {
     public void imprimeMatrizAdjacencia() {
         String resultado = "";
         int matriz[][] = this.getMatrizAdjacencia();
-        for (int i = 0; i < vertices.size(); i++) {
-            for (int j = 0; j < vertices.size(); j++) {
+        for (int i = 0; i < listaVertices.size(); i++) {
+            for (int j = 0; j < listaVertices.size(); j++) {
                 resultado += matriz[i][j] + "\t";
             }
             resultado += "\n";
@@ -375,7 +412,7 @@ public class Grafo {
 
     public void grauVerticeRecepcao() {
         int cont = 0;
-        for (Vertice v : this.vertices) {
+        for (Vertice v : this.listaVertices) {
             cont = 0;
             for (int i = 0; i < arestas.size(); i++) {
                 if (arestas.get(i).getDestino() == v) {
@@ -388,7 +425,7 @@ public class Grafo {
 
     public void grauVerticeEmissao() {
         int cont;
-        for (Vertice v : this.vertices) {
+        for (Vertice v : this.listaVertices) {
             cont = 0;
             for (int i = 0; i < arestas.size(); i++) {
                 if (arestas.get(i).getOrigem() == v) {
@@ -437,13 +474,13 @@ public class Grafo {
     }
 
     /* METODOS DE MANIPULAÇÃO DE ARESTA */
-    public void criarAresta(String idOrigem, String idDestino) {
+    public void criarAresta(String idOrigem, String idDestino, int peso) {
         if (this.getVertices().isEmpty()) {
-            System.out.println("Nao existem vertices");
+            System.out.println("Nao existem listaVertices");
         } else {
             Vertice v1 = this.buscaVertice(idOrigem);
             Vertice v2 = this.buscaVertice(idDestino);
-            Aresta aresta = this.addAresta(v1, v2);
+            Aresta aresta = this.addAresta(v1, v2, peso);
         }
     }
 
@@ -473,7 +510,7 @@ public class Grafo {
     /* MANIPULACAO DO GRAFO */
     public int isRegular() {
         int grau = -1;
-        for (Vertice v : this.vertices) {
+        for (Vertice v : this.listaVertices) {
             if (grau == -1) {
                 grau = grauVertice(v);
             } else if (grau != grauVertice(v)) {
@@ -492,8 +529,8 @@ public class Grafo {
     }
 
     public int isCompleto() {
-        if (isRegular() == vertices.size() - 1) {
-            return vertices.size();
+        if (isRegular() == listaVertices.size() - 1) {
+            return listaVertices.size();
         }
         return 0;
     }
@@ -507,8 +544,8 @@ public class Grafo {
     }
 
     public boolean isMultigrafo() {
-        for (Vertice v1 : vertices) {
-            for (Vertice v2 : vertices) {
+        for (Vertice v1 : listaVertices) {
+            for (Vertice v2 : listaVertices) {
                 if (getAdjacentes(v1, v2) > 1) {
                     return true;
                 }

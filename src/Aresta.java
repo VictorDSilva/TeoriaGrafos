@@ -16,15 +16,8 @@ public class Aresta {
         this.destino = destino;
     }
 
-    public Aresta(Vertice origem, Vertice destino) {
-        this.origem = origem;
-        this.destino = destino;
+    public Aresta(Vertice origem, Vertice destino, int peso) {
         this.nome = origem.getId() + destino.getId();
-        this.peso = 1;
-    }
-
-    public Aresta(String nome, Vertice origem, Vertice destino, int peso) {
-        this.nome = nome;
         this.origem = origem;
         this.destino = destino;
         this.peso = peso;

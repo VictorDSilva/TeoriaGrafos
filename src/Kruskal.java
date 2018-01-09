@@ -39,9 +39,8 @@ public class Kruskal {
     public Grafo getKruskal() {
         //Varre a lista de vertices e armazena os ids na lista de verticesId
         for (int i = 0; i < vertices.size(); i++) {
-            String e = grafo.getVertices().get(i).getId();
-            // verticesId.add(grafo.getVertices().get(i).getId());
-            System.out.println(e);
+            String e = grafo.getVertices().get(i).getId();            
+            //System.out.println(e);
             verticesId.add(e);
         }
 

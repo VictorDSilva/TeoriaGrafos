@@ -14,8 +14,14 @@ public class GeradorMenu {
     public static String geraMenu() {
         String aux = "";
         int qtd = 0;
-        Grafo grafo = new Grafo();
-        String opt = " ", opt2 = " "; //opt significa option
+        System.out.print("Desja criar um grafo orientado? [s/N] ");
+        aux = ler.next();
+        boolean orientado;
+
+        orientado = aux.equals("s") || aux.equals("S");
+        Grafo grafo = new Grafo(orientado);
+        String opt = " "; //opt significa option
+        aux = "";
 
         while (opt != "0") {
             System.out.println("************************");
@@ -38,7 +44,7 @@ public class GeradorMenu {
                     break;
 
                 case "3":
-                    opcoesXML(grafo, "3", "grafo");
+                    opcoesXML(grafo, "grafo");
                     break;
 
                 case "4":
@@ -49,13 +55,17 @@ public class GeradorMenu {
                     if (!grafo.getVertices().isEmpty()) {
                         Kruskal kruskal = new Kruskal(grafo.getArestas(), grafo.getVertices(), grafo);
                         Grafo grafoKruskal = kruskal.getKruskal();
-                        System.out.println("Gerenciar XML KRUSKAL");
-                        opcoesXML(grafoKruskal, "3", "kruskal");
 
-                        String opt3 = "";
+                        System.out.println("Gerenciar XML KRUSKAL");
+                        opcoesXML(grafoKruskal, "kruskal");
+
+                        String opt3 = " ";
                         System.out.print("Deseja vizualizar imagem [s/N]? ");
                         opt3 = ler.next();
-                        if (opt3 == "s" || opt3 == "S") {
+                        boolean geraImg;
+
+                        geraImg = opt3.equals("s") || opt3.equals("S");
+                        if(geraImg){                            
                             gerarImagem("kruskal");
                         } else {
                             break;
@@ -78,6 +88,7 @@ public class GeradorMenu {
     public static void manipularGrafo(Grafo grafo, String opt2) {
         String aux = "";
         int qtd = 0;
+        int pesoAresta = 0;
 
         System.out.println("************************");
         System.out.println("1 - Criar Vértice");
@@ -89,7 +100,8 @@ public class GeradorMenu {
         opt2 = ler.next();
         switch (opt2) {
             case "1":
-                //Criar vertices                    
+                //Criar vertices 
+                qtd = 0;
                 System.out.print("Digite a quantidade de vertices: ");
                 qtd = ler.nextInt();
                 for (int i = 0; i < qtd; i++) {
@@ -107,9 +119,19 @@ public class GeradorMenu {
                 for (int i = 0; i < qtd; i++) {
                     System.out.print("Escolha um vertice de Origem: ");
                     String origem = ler.next();
+
                     System.out.print("Escolha um vertice de Destino: ");
                     String destino = ler.next();
-                    grafo.criarAresta(origem, destino);
+                    System.out.print("Digite seu peso da aresta: ");
+                    pesoAresta = ler.nextInt();
+                    int peso = pesoAresta;
+                    if (peso > 0) {
+                        grafo.criarAresta(origem, destino, peso);
+                    } else {
+                        System.out.println("Numero invalido!");
+                        break;
+                    }
+
                 }
                 break;
             case "3":
@@ -217,38 +239,26 @@ public class GeradorMenu {
                 grafo.imprimeMatrizAdjacencia();
                 break;
             case "13":
-                //ver lista de adjacencia
-                grafo.getVertices().forEach((v)
-                        -> {
-                    System.out.println(v.getId());
-                    grafo.getListaAdjacencia(v);
-                });
-                //System.out.println(grafo.getListaAdjacencia());
+                //ver lista de adjacencia dos vertices           
+                grafo.listaAdjacencias();
                 break;
         }
     }
 
-    public static void opcoesXML(Grafo grafo, String opt2, String nome) {
+    public static void opcoesXML(Grafo grafo, String nome) {
         System.out.println("************************");
         System.out.println("1 - Ler XML");
         System.out.println("2 - Gravar XML");
         System.out.println("************************");
         System.out.print("Escolha uma opção: ");
-        opt2 = ler.next();
+        String opt2 = ler.next();
         switch (opt2) {
             case "1":
-                //grafo.lerXML();
-                Boolean menu = true;
-                Scanner input = new Scanner(System.in);
-                System.out.print("Qual o caminho do banco de palavras que deseja utilizar?: ");
-                do {
-                    try {
-                        grafo.lerXML(input.nextLine());
-                        menu = false;
-                    } catch (Exception ex) {
-                        System.out.print("Banco não encontrado, tente novamente: ");
-                    }
-                } while (menu);
+                try {
+                    grafo.lerXML(nome);
+                } catch (Exception ex) {
+                    System.out.print("Banco não encontrado, tente novamente: ");
+                }
                 break;
             case "2":
                 //gravar xml

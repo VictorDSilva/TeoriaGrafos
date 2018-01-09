@@ -6,19 +6,8 @@
   <graph id='1' arestadefault='direcao'>
       <node id='a'/>
       <node id='b'/>
-      <node id='c'/>
-      <node id='d'/>
-      <node id='e'/>
-      <node id='f'/>
-      <node id='g'/>
-      <node id='h'/>
-      <node id='i'/>
+      <node id='cc'/>
       <edge source='a' target='b'/>
-      <edge source='a' target='c'/>
-      <edge source='d' target='e'/>
-      <edge source='f' target='g'/>
-      <edge source='i' target='h'/>
-      <edge source='c' target='d'/>
-      <edge source='f' target='a'/>
+      <edge source='a' target='cc'/>
   </graph>
 </graphml>
