@@ -1,24 +1,22 @@
+package Modelos;
 
+import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author straby
- */
-public class Vertice {
 
+public class Vertice {
+    
+    @XStreamAsAttribute
     private String id;
+    
     private ArrayList<Aresta> adj;
 
-    Vertice(String id) {
+    public Vertice(String id) {
         this.id = id;
         this.adj = new ArrayList<Aresta>();
     }
 
-    public Vertice() {
-
-    }
 
     void addAdj(Aresta e) {//add aresta Adjacente
         adj.add(e);

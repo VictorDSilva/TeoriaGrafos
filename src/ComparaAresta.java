@@ -1,4 +1,5 @@
 
+import Modelos.Aresta;
 import java.util.Comparator;
 
 public class ComparaAresta implements Comparator {

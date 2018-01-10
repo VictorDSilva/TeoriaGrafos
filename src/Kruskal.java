@@ -1,4 +1,7 @@
 
+import Modelos.Vertice;
+import Modelos.Aresta;
+import Modelos.Grafo;
 import java.util.ArrayList;
 import java.util.Collections;
 

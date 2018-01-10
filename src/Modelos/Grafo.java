@@ -1,5 +1,7 @@
+package Modelos;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,6 +9,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.security.AnyTypePermission;
+import java.security.Key;
+import javafx.scene.chart.PieChart;
 
 /**
  *
@@ -19,6 +27,7 @@ public class Grafo {
     private boolean orientado;
     private String id;
     private String arestaPadrao;
+    XStream xstream = new XStream(new DomDriver());
 
     public Grafo() {
         this.listaVertices = new ArrayList<Vertice>();
@@ -30,6 +39,25 @@ public class Grafo {
         this.listaVertices = new ArrayList<Vertice>();
         this.arestas = new ArrayList<Aresta>();
         this.orientado = orientado;
+
+        xstream.setMode(XStream.NO_REFERENCES);
+        Class[] classes = new Class[]{Grafo.class, Vertice.class, Aresta.class, PieChart.Data.class, Key.class};
+        xstream.addPermission(AnyTypePermission.ANY);
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypes(classes);
+        xstream.alias("graphml", Grafo.class);
+        xstream.alias("node", Vertice.class);
+        xstream.alias("graph", Grafo.class);
+        xstream.alias("edge", Aresta.class);
+        xstream.omitField(Aresta.class, "origem");
+        xstream.omitField(Aresta.class, "destino");
+        xstream.useAttributeFor("origem", String.class);
+        xstream.useAttributeFor("destino", String.class);    
+        xstream.addImplicitCollection(Grafo.class, "listaVertices");
+        xstream.addImplicitCollection(Grafo.class, "arestas");
+        xstream.useAttributeFor("id", String.class);
+        xstream.useAttributeFor("ordenacao", TipoGrafo.class);
+        xstream.aliasAttribute("edgedefault", "tipo");
     }
 
     public Grafo(String id, String arestaPadrao, ArrayList<Vertice> listaVertices, ArrayList<Aresta> arestas) {
@@ -605,5 +633,13 @@ public class Grafo {
         } catch (IOException ex) {
             System.out.println("Erro ao ler XML!");
         }
+    }
+
+    public void carregarGrafo(String nome) {
+
+        File xmlFileLer = new File(nome + ".xml");
+        Grafo grafoLer = (Grafo) xstream.fromXML(xmlFileLer);
+        String xmlLer = xstream.toXML(grafoLer);
+        System.out.println(xmlLer);
     }
 }

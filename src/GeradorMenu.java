@@ -1,7 +1,12 @@
 
+import Modelos.Grafo;
 import br.com.davesmartins.graphviewlib.ViewGraph;
 import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,14 +17,26 @@ public class GeradorMenu {
     public static Scanner ler = new Scanner(System.in);
 
     public static String geraMenu() {
+/*
+        XmlController objXML = new XmlController();
+        Grafo grafo = null;
+
+        try {
+            grafo = objXML.carregarGrafo("grafo.xml");
+        } catch (IOException ex) {
+            Logger.getLogger(GeradorMenu.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        */  
         String aux = "";
-        int qtd = 0;
         System.out.print("Desja criar um grafo orientado? [s/N] ");
         aux = ler.next();
         boolean orientado;
 
-        orientado = aux.equals("s") || aux.equals("S");
+       orientado = aux.equals("s") || aux.equals("S");
         Grafo grafo = new Grafo(orientado);
+         
+        int qtd = 0;
         String opt = " "; //opt significa option
         aux = "";
 
@@ -65,7 +82,7 @@ public class GeradorMenu {
                         boolean geraImg;
 
                         geraImg = opt3.equals("s") || opt3.equals("S");
-                        if(geraImg){                            
+                        if (geraImg) {
                             gerarImagem("kruskal");
                         } else {
                             break;
@@ -246,6 +263,7 @@ public class GeradorMenu {
     }
 
     public static void opcoesXML(Grafo grafo, String nome) {
+
         System.out.println("************************");
         System.out.println("1 - Ler XML");
         System.out.println("2 - Gravar XML");
@@ -264,6 +282,8 @@ public class GeradorMenu {
                 //gravar xml
                 grafo.gravarXML(nome);
                 break;
+            case "3":
+                grafo.carregarGrafo(nome);
         }
     }
 
