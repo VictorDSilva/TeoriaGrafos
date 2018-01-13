@@ -1,13 +1,14 @@
+package thirdyparty;
 
-import Modelos.Aresta;
 import java.util.Comparator;
+import modelo.Edge;
 
 public class ComparaAresta implements Comparator {
 
     @Override
     public int compare(Object o1, Object o2) {
-        Aresta aresta1 = (Aresta) o1;
-        Aresta aresta2 = (Aresta) o2;
+        Edge aresta1 = (Edge) o1;
+        Edge aresta2 = (Edge) o2;
         if (aresta1.getPeso() > aresta2.getPeso()) {
             return 1;
         }
@@ -16,4 +17,5 @@ public class ComparaAresta implements Comparator {
         }
         return 0;
     }
+
 }

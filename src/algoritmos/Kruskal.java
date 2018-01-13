@@ -1,20 +1,22 @@
+package algoritmos;
 
-import Modelos.Vertice;
-import Modelos.Aresta;
-import Modelos.Grafo;
 import java.util.ArrayList;
 import java.util.Collections;
+import modelo.Grafo;
+import modelo.Edge;
+import modelo.Node;
+import thirdyparty.ComparaAresta;
 
 public class Kruskal {
 
     private ArrayList<ArrayList<String>> listaPais = new ArrayList<ArrayList<String>>();
-    private ArrayList<Aresta> arestas;
-    private ArrayList<Vertice> vertices;
+    private ArrayList<Edge> arestas;
+    private ArrayList<Node> vertices;
     private ArrayList<String> verticesId = new ArrayList<String>();
 
     private Grafo grafo;
 
-    public Kruskal(ArrayList<Aresta> arestas, ArrayList<Vertice> vertices, Grafo grafo) {
+    public Kruskal(ArrayList<Edge> arestas, ArrayList<Node> vertices, Grafo grafo) {
         this.arestas = arestas;
         this.vertices = vertices;
         this.grafo = grafo;
@@ -23,41 +25,41 @@ public class Kruskal {
     public Kruskal() {
     }
 
-    public ArrayList<Aresta> getArestas() {
+    public ArrayList<Edge> getEdges() {
         return arestas;
     }
 
-    public void setArestas(ArrayList<Aresta> arestas) {
+    public void setEdges(ArrayList<Edge> arestas) {
         this.arestas = arestas;
     }
 
-    public ArrayList<Vertice> getVertices() {
+    public ArrayList<Node> getNodes() {
         return vertices;
     }
 
-    public void setVertices(ArrayList<Vertice> vertices) {
+    public void setNodes(ArrayList<Node> vertices) {
         this.vertices = vertices;
     }
 
     public Grafo getKruskal() {
         //Varre a lista de vertices e armazena os ids na lista de verticesId
         for (int i = 0; i < vertices.size(); i++) {
-            String e = grafo.getVertices().get(i).getId();            
+            String e = grafo.getNodes().get(i).getId();
             //System.out.println(e);
             verticesId.add(e);
         }
 
-        ArrayList<Aresta> arvore = new ArrayList<Aresta>();
+        ArrayList<Edge> arvore = new ArrayList<Edge>();
 
         for (int i = 0; i < vertices.size(); i++) {
             ArrayList<String> listaAux = new ArrayList<String>();
-            listaAux.add(grafo.getVertices().get(i).getId());
+            listaAux.add(grafo.getNodes().get(i).getId());
             listaPais.add(listaAux);
         }
 
         ComparaAresta comparador = new ComparaAresta();
 
-        arestas = (ArrayList<Aresta>) grafo.getArestas().clone();
+        arestas = (ArrayList<Edge>) grafo.getEdges().clone();
         Collections.sort(arestas, comparador);
 
         for (int i = 0; i < arestas.size(); i++) {
@@ -80,7 +82,7 @@ public class Kruskal {
         return listaPais.get(verticesId.indexOf(idNo));
     }
 
-    private void unir(Vertice origem, Vertice destino) {
+    private void unir(Node origem, Node destino) {
         int m = listaPais.get(verticesId.indexOf(destino.getId())).size();
 
         for (int i = 0; i < m; i++) {
@@ -91,8 +93,8 @@ public class Kruskal {
         }
     }
 
-    private Grafo arestasParaArvore(ArrayList<Aresta> arvore) {
-        Grafo grafo = new Grafo(this.grafo.getId(), this.grafo.getArestaPadrao(), this.vertices, arvore);
+    private Grafo arestasParaArvore(ArrayList<Edge> arvore) {
+        Grafo grafo = new Grafo(this.grafo.getId(), this.grafo.getEdgedefault(), this.vertices, arvore);
         return grafo;
     }
 
