@@ -9,13 +9,22 @@
       <node id='C'/>
       <node id='D'/>
       <edge id='AB' source='A' target='B'>
-          <data key= 'd1'>2</data>
+          <data key= 'd1'>25</data>
+      </edge>
+      <edge id='AC' source='A' target='C'>
+          <data key= 'd1'>25</data>
       </edge>
       <edge id='BC' source='B' target='C'>
-          <data key= 'd1'>4</data>
+          <data key= 'd1'>25</data>
+      </edge>
+      <edge id='DC' source='D' target='C'>
+          <data key= 'd1'>13</data>
       </edge>
       <edge id='DA' source='D' target='A'>
-          <data key= 'd1'>7</data>
+          <data key= 'd1'>13</data>
+      </edge>
+      <edge id='DB' source='D' target='B'>
+          <data key= 'd1'>13</data>
       </edge>
   </graph>
 </graphml>

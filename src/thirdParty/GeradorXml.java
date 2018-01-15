@@ -118,11 +118,11 @@ public abstract class GeradorXml {
                     if (!listaDataNode.isEmpty()) {
                         String label = listaDataNode.get(i).getTextContent();
                         no = new Node(id, label);
+                        System.out.println("Valor nó: " + no.getLabel());
                     } else {
                         no = new Node(id);
                     }
                     grafo.addNode(no);
-                    System.out.println("Valor nó: " + no.getLabel());
                 }
             }
 
@@ -137,13 +137,14 @@ public abstract class GeradorXml {
                     String target = elementoEdge.getAttribute("target");
 
                     if (!listaDataEdge.isEmpty()) {
-                        String valor = listaDataEdge.get(i).getTextContent();
-                        aresta = new Edge(id, grafo.buscaNode(source), grafo.buscaNode(target), valor);
+                        String peso = listaDataEdge.get(i).getTextContent();
+                        aresta = new Edge(id, grafo.buscaNode(source), grafo.buscaNode(target), peso);
+                        System.out.println("Peso da aresta: " + aresta.getPeso());
+
                     } else {
                         aresta = new Edge(id, grafo.buscaNode(source), grafo.buscaNode(target));
                     }
                     grafo.addEdge(aresta);
-                    System.out.println("Valor aresta: " + aresta.getPeso());
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {

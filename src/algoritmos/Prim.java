@@ -16,7 +16,7 @@ public class Prim {
     private ArrayList<String> nosIdAdicionados;
     private ArrayList<String> nosId;
 
-    private Grafo graphml;
+    private Grafo grafo;
 
     public Prim() {
         this.arestas = new ArrayList();
@@ -28,36 +28,36 @@ public class Prim {
     }
 
     public Grafo getPrim(Grafo grafoml) {
-        graphml = grafoml;
-        nos = graphml.getNodes();
+        this.grafo = grafoml;
+        this.nos = grafo.getNodes();
         for (int i = 0; i < nos.size(); i++) {
-            nosId.add(graphml.getNodes().get(i).getId());
+            this.nosId.add(grafo.getNodes().get(i).getId());
         }
 
-        ComparaAresta c = new ComparaAresta();
-        arestas = (ArrayList<Edge>) graphml.getEdges().clone();
-        Collections.sort(arestas, c);
+        ComparaAresta comparador = new ComparaAresta();
+        this.arestas = (ArrayList<Edge>) grafo.getEdges().clone();
+        Collections.sort(arestas, comparador);
 
-        nosAdicionados.add(nos.get(0));
-        nosIdAdicionados.add(nos.get(0).getId());
+        this.nosAdicionados.add(nos.get(0));
+        this.nosIdAdicionados.add(nos.get(0).getId());
 
-        while (nosAdicionados.size() != nos.size()) {
+        while (this.nosAdicionados.size() != this.nos.size()) {
             for (int j = 0; j < arestas.size(); j++) {
                 // nosAdicionados.add(nos.get(i));
                 if (nosIdAdicionados.contains(arestas.get(j).getOrigem().getId())
                         && !nosIdAdicionados.contains(arestas.get(j).getDestino().getId())) {
-                    arestasAdicionadas.add(arestas.get(j));
-                    nosAdicionados.add(arestas.get(j).getDestino());
-                    nosIdAdicionados.add(arestas.get(j).getDestino().getId());
-                    arestas.remove(j);
+                    this.arestasAdicionadas.add(arestas.get(j));
+                    this.nosAdicionados.add(arestas.get(j).getDestino());
+                    this.nosIdAdicionados.add(arestas.get(j).getDestino().getId());
+                    this.arestas.remove(j);
                     break;
                 }
                 if (nosIdAdicionados.contains(arestas.get(j).getDestino().getId())
                         && !nosIdAdicionados.contains(arestas.get(j).getOrigem().getId())) {
-                    arestasAdicionadas.add(arestas.get(j));
-                    nosAdicionados.add(arestas.get(j).getOrigem());
-                    nosIdAdicionados.add(arestas.get(j).getOrigem().getId());
-                    arestas.remove(j);
+                    this.arestasAdicionadas.add(arestas.get(j));
+                    this.nosAdicionados.add(arestas.get(j).getOrigem());
+                    this.nosIdAdicionados.add(arestas.get(j).getOrigem().getId());
+                    this.arestas.remove(j);
                     break;
                 }
             }

@@ -36,7 +36,7 @@ public class PrincipalTSP {
             System.out.println("\nA ordem para visita será: ");
             VizinhoMaisProximo algoritmoTSP = new VizinhoMaisProximo();
             algoritmoTSP.tsp(adjacency_matrix);
-
+            
         } catch (InputMismatchException inputMismatch) {
             System.out.println("Formato Inválido!");
         }

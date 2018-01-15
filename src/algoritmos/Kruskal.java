@@ -9,10 +9,10 @@ import thirdyparty.ComparaAresta;
 
 public class Kruskal {
 
-    private ArrayList<ArrayList<String>> listaPais = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<String>> listaPais = new ArrayList<>();
     private ArrayList<Edge> arestas;
     private ArrayList<Node> vertices;
-    private ArrayList<String> verticesId = new ArrayList<String>();
+    private ArrayList<String> verticesId = new ArrayList<>();
 
     private Grafo grafo;
 
@@ -43,59 +43,59 @@ public class Kruskal {
 
     public Grafo getKruskal() {
         //Varre a lista de vertices e armazena os ids na lista de verticesId
-        for (int i = 0; i < vertices.size(); i++) {
-            String e = grafo.getNodes().get(i).getId();
+        for (int i = 0; i < this.vertices.size(); i++) {
+            String e = this.grafo.getNodes().get(i).getId();
             //System.out.println(e);
-            verticesId.add(e);
+            this.verticesId.add(e);
         }
 
-        ArrayList<Edge> arvore = new ArrayList<Edge>();
+        ArrayList<Edge> arvoreAresta = new ArrayList<>();
 
-        for (int i = 0; i < vertices.size(); i++) {
-            ArrayList<String> listaAux = new ArrayList<String>();
+        for (int i = 0; i < this.vertices.size(); i++) {
+            ArrayList<String> listaAux = new ArrayList<>();
             listaAux.add(grafo.getNodes().get(i).getId());
-            listaPais.add(listaAux);
+            this.listaPais.add(listaAux);
         }
 
         ComparaAresta comparador = new ComparaAresta();
 
-        arestas = (ArrayList<Edge>) grafo.getEdges().clone();
-        Collections.sort(arestas, comparador);
+        this.arestas = (ArrayList<Edge>) this.grafo.getEdges().clone();
+        Collections.sort(this.arestas, comparador);
 
-        for (int i = 0; i < arestas.size(); i++) {
+        for (int i = 0; i < this.arestas.size(); i++) {
 
-            if (comparaPais(arestas.get(i).getOrigem().getId(), arestas.get(i).getDestino().getId())) {
-                arvore.add(arestas.get(i));
-                unir(arestas.get(i).getOrigem(), arestas.get(i).getDestino());
-                unir(arestas.get(i).getDestino(), arestas.get(i).getOrigem());
+            if (comparaPais(this.arestas.get(i).getOrigem().getId(), this.arestas.get(i).getDestino().getId())) {
+                arvoreAresta.add(this.arestas.get(i));
+                unirNos(this.arestas.get(i).getOrigem(), this.arestas.get(i).getDestino());
+                unirNos(this.arestas.get(i).getDestino(), this.arestas.get(i).getOrigem());
             }
         }
 
-        return arestasParaArvore(arvore);
+        return arestasParaArvore(arvoreAresta);
     }
 
     private boolean comparaPais(String origem, String destino) {
-        return Collections.disjoint(pais(origem), pais(destino));
+        return Collections.disjoint(Nopai(origem), Nopai(destino));
     }
 
-    private ArrayList<String> pais(String idNo) {
-        return listaPais.get(verticesId.indexOf(idNo));
+    private ArrayList<String> Nopai(String idNo) {
+        return this.listaPais.get(this.verticesId.indexOf(idNo));
     }
 
-    private void unir(Node origem, Node destino) {
-        int m = listaPais.get(verticesId.indexOf(destino.getId())).size();
+    private void unirNos(Node origem, Node destino) {
+        int tamanhoLista = this.listaPais.get(this.verticesId.indexOf(destino.getId())).size();
 
-        for (int i = 0; i < m; i++) {
-            String x = listaPais.get(verticesId.indexOf(destino.getId())).get(i);
-            if (!(listaPais.get(verticesId.indexOf(origem.getId())).contains(x))) {
-                listaPais.get(verticesId.indexOf(origem.getId())).add(x);
+        for (int i = 0; i < tamanhoLista; i++) {
+            String x = this.listaPais.get(this.verticesId.indexOf(destino.getId())).get(i);
+            if (!(this.listaPais.get(this.verticesId.indexOf(origem.getId())).contains(x))) {
+                this.listaPais.get(this.verticesId.indexOf(origem.getId())).add(x);
             }
         }
     }
 
     private Grafo arestasParaArvore(ArrayList<Edge> arvore) {
-        Grafo grafo = new Grafo(this.grafo.getId(), this.grafo.getEdgedefault(), this.vertices, arvore);
-        return grafo;
+        Grafo arvoreMinima = new Grafo(this.grafo.getId(), this.grafo.getEdgedefault(), this.vertices, arvore);
+        return arvoreMinima;
     }
 
 }

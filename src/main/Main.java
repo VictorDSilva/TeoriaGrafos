@@ -88,13 +88,13 @@ public class Main {
                         System.out.print("ID do vertice 1: ");
                         String noRaiz = ler.next();
                         int i = dijkstra.getGrafo().getNodeIndice(noRaiz);
-                        dijkstra.execute(dijkstra.getGrafo().getNodes().get(i));
+                        dijkstra.buscarCaminhos(dijkstra.getGrafo().getNodes().get(i));
 
                         System.out.print("ID do vertice 2: ");
                         String noMenor = ler.next();
                         int j = dijkstra.getGrafo().getNodeIndice(noMenor);
 
-                        float menor = dijkstra.menorDistancia(dijkstra.getGrafo().getNodes().get(j));
+                        float menor = dijkstra.getMenorDistancia(dijkstra.getGrafo().getNodes().get(j));
                         if (menor == Float.MAX_VALUE) {
                             System.out.println("infinito");
                         } else {
@@ -237,7 +237,7 @@ public class Main {
         System.out.println("12 - Ver Matrizes Adjascencia");
         System.out.println("13 - Ver Lista de Adjascencia");
         System.out.println("14 - Ver Sé há Caminho");
-        System.out.println("15 - Ver Se há cadeia");
+        System.out.println("15 - Ver Se há Cadeia");
         System.out.println("************************");
         System.out.print("Escolha uma opção: ");
         opt2 = ler.next();
@@ -298,15 +298,15 @@ public class Main {
                 break;
             case "11":
                 System.out.println("Matriz de Incidencia");
-                grafo.imprimeMatrizIncidencia();
+                grafo.imprimeMatrizIncidencia(grafo);
                 break;
             case "12":
                 System.out.println("Matriz de Adjacencia");
-                grafo.imprimeMatrizAdjacencia();
+                grafo.imprimeMatrizAdjacencia(grafo);
                 break;
             case "13":
                 //ver lista de adjacencia dos vertices           
-                grafo.listaAdjacencias();
+                grafo.listaAdjacencias(grafo);
                 break;
             case "14":
                 System.out.print("\nEscolha um vertice de Origem: ");
@@ -316,6 +316,8 @@ public class Main {
                 String destino = ler.next();
                 if (grafo.caminho(origem, destino)) {
                     System.out.println("Há caminho!");
+                } else {
+                    System.out.println("Não há caminho!");
                 }
                 break;
             case "15":
@@ -325,7 +327,9 @@ public class Main {
                 System.out.print("Escolha um vertice de Destino: ");
                 destino = ler.next();
                 if (grafo.cadeia(origem, destino)) {
-                    System.out.println("Há caminho");
+                    System.out.println("Há cadeia");
+                } else {
+                    System.out.println("Não há cadeia");
                 }
                 break;
         }
@@ -387,7 +391,6 @@ public class Main {
             while (!opt.equals("0")) {
                 System.out.println("************************");
                 System.out.println("INFORMAÇÕES DO GRAFO VIA XML");
-
                 System.out.println("1 - Manipular Grafo");
                 System.out.println("2 - Vizualizar Grafo");
                 System.out.println("3 - Opções XML");
@@ -431,13 +434,13 @@ public class Main {
                             System.out.print("ID do vertice 1: ");
                             String noRaiz = ler.next();
                             int i = dijkstra.getGrafo().getNodeIndice(noRaiz);
-                            dijkstra.execute(dijkstra.getGrafo().getNodes().get(i));
+                            dijkstra.buscarCaminhos(dijkstra.getGrafo().getNodes().get(i));
 
                             System.out.print("ID do vertice 2: ");
                             String noMenor = ler.next();
                             int j = dijkstra.getGrafo().getNodeIndice(noMenor);
 
-                            float menor = dijkstra.menorDistancia(dijkstra.getGrafo().getNodes().get(j));
+                            float menor = dijkstra.getMenorDistancia(dijkstra.getGrafo().getNodes().get(j));
                             if (menor == Float.MAX_VALUE) {
                                 System.out.println("infinito");
                             } else {
@@ -479,14 +482,6 @@ public class Main {
                         System.out.println("**Opção inválida**");
                 }
             }
-
-            System.out.println("XML LIDO!\n");
-            if (GeradorImagem.gerarImagem(nome + ".xml")) {
-                System.out.println("Imagem lida com sucesso!\n\n");
-            } else {
-                System.out.println("Erro ao Gerar Imagem :S\n\n");
-            }
-
         }
     }
 

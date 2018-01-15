@@ -195,6 +195,23 @@ public class Grafo {
         return cont;
     }
 
+    public boolean isAdjacente(Grafo grafo, Node no1, Node no2) {
+        int i;
+        for (i = 0; i < grafo.edges.size(); i++) {
+            if (grafo.getEdgedefault().equals("directed")) {
+                if (grafo.edges.get(i).getOrigem().getId().equals(no1.getId()) && grafo.edges.get(i).getDestino().getId().equals(no2.getId())) {
+                    return true;
+                }
+            } else {
+                if (grafo.edges.get(i).getOrigem().getId().equals(no1.getId()) && grafo.edges.get(i).getDestino().getId().equals(no2.getId())
+                        || grafo.edges.get(i).getOrigem().getId().equals(no2.getId()) && grafo.edges.get(i).getDestino().getId().equals(no1.getId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean isAdjacente(Node no1, Node no2) {
         int i;
         for (i = 0; i < this.edges.size(); i++) {
@@ -332,30 +349,30 @@ public class Grafo {
     }
 
     //MATRIZ DE INCIDENCIA E ADJACENCIA
-    public int[][] getMatrizIncidencia() {
-        int linha = this.getNodes().size();
-        int coluna = this.getEdges().size();
+    public int[][] getMatrizIncidencia(Grafo grafo) {
+        int linha = grafo.getNodes().size();
+        int coluna = grafo.getEdges().size();
         int[][] matrizIncidencia = new int[linha][coluna];
         int i, j;
         for (i = 0; i < linha; i++) {
             for (j = 0; j < coluna; j++) {
-                if (this.getEdges().get(j).getDirected()) {
+                if (grafo.getEdgedefault().equals("directed")) {
 
-                    if (this.getNodes().get(i).getId().equals(this.getEdges().get(j).getOrigem().getId()) && this.getNodes().get(i).getId().equals(this.getEdges().get(j).getDestino().getId())) {
+                    if (grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getOrigem().getId()) && grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getDestino().getId())) {
                         matrizIncidencia[i][j] = 2;
                     } else {
-                        if (this.getNodes().get(i).getId().equals(this.getEdges().get(j).getOrigem().getId())) {
+                        if (grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getOrigem().getId())) {
                             matrizIncidencia[i][j] = 1;
                         }
-                        if (this.getNodes().get(i).getId().equals(this.getEdges().get(j).getDestino().getId())) {
+                        if (grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getDestino().getId())) {
                             matrizIncidencia[i][j] = -1;
                         }
                     }
                 } else {
-                    if (this.getNodes().get(i).getId().equals(this.getEdges().get(j).getOrigem().getId()) && this.getNodes().get(i).getId().equals(this.getEdges().get(j).getDestino().getId())) {
+                    if (grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getOrigem().getId()) && grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getDestino().getId())) {
                         matrizIncidencia[i][j] = 2;
-                    } else if ((this.getNodes().get(i).getId().equals(this.getEdges().get(j).getOrigem().getId()))
-                            || (this.getNodes().get(i).getId().equals(this.getEdges().get(j).getDestino().getId()))) {
+                    } else if ((grafo.getNodes().get(i).getId().equals(grafo.getEdges().get(j).getOrigem().getId()))
+                            || (grafo.getNodes().get(i).getId().equals(this.getEdges().get(j).getDestino().getId()))) {
                         matrizIncidencia[i][j] = 1;
 
                     }
@@ -366,27 +383,27 @@ public class Grafo {
         return matrizIncidencia;
     }
 
-    public int[][] getMatrizAdjacencia() {
+    public int[][] getMatrizAdjacencia(Grafo grafo) {
 
-        int n = this.getNodes().size();
-        int m = this.getEdges().size();
-        int[][] matrizAdjacencia = new int[n][n];
+        int listaNos = grafo.getNodes().size();
+        int listaArestas = grafo.getEdges().size();
+        int[][] matrizAdjacencia = new int[listaNos][listaNos];
         int i, j, k;
 
-        for (i = 0; i < n; i++) {
-            for (j = 0; j < n; j++) {
-                boolean adjacente = this.isAdjacente(this.getNodes().get(i), this.getNodes().get(j));
+        for (i = 0; i < listaNos; i++) {
+            for (j = 0; j < listaNos; j++) {
+                boolean adjacente = this.isAdjacente(grafo, grafo.getNodes().get(i), grafo.getNodes().get(j));
                 if (adjacente) {
-                    for (k = 0; k < m; k++) {
-                        for (k = 0; k < m; k++) {
-                            if (this.getEdges().get(k).getDirected()) {
-                                if (this.edges.get(k).getOrigem().getId().equals(this.getNodes().get(i).getId())
-                                        && this.edges.get(k).getDestino().getId().equals(this.getNodes().get(j).getId())) {
-                                    matrizAdjacencia[i][j] = this.edges.get(k).getPeso();
+                    for (k = 0; k < listaArestas; k++) {
+                        for (k = 0; k < listaArestas; k++) {
+                            if (grafo.getEdgedefault().equals("directed")) {
+                                if (grafo.edges.get(k).getOrigem().getId().equals(grafo.getNodes().get(i).getId())
+                                        && grafo.edges.get(k).getDestino().getId().equals(grafo.getNodes().get(j).getId())) {
+                                    matrizAdjacencia[i][j] = grafo.edges.get(k).getPeso();
 
                                 }
                             } else {
-                                matrizAdjacencia[i][j] = this.edges.get(j).getPeso();
+                                matrizAdjacencia[i][j] = grafo.edges.get(j).getPeso();
 
                             }
                         }
@@ -400,12 +417,12 @@ public class Grafo {
         return matrizAdjacencia;
     }
 
-    public void listaAdjacencias() {
+    public void listaAdjacencias(Grafo grafo) {
         HashMap<Node, ArrayList<Node>> nodes = new HashMap<>();
 
-        for (Node n1 : this.nodes) {
+        for (Node n1 : (grafo.getNodes())) {
             ArrayList<Node> nodesAdjacentes = new ArrayList<>();
-            for (Node n2 : this.nodes) {
+            for (Node n2 : grafo.getNodes()) {
                 if (NodeAdjacenteLista(n1.getId(), n2.getId())) {
                     nodesAdjacentes.add(n2);
                 }
@@ -434,9 +451,9 @@ public class Grafo {
         return false;
     }
 
-    public void imprimeMatrizIncidencia() {
+    public void imprimeMatrizIncidencia(Grafo grafo) {
         String resultado = "";
-        int matriz[][] = this.getMatrizIncidencia();
+        int matriz[][] = this.getMatrizIncidencia(grafo);
         for (int i = 0; i < this.nodes.size(); i++) {
             for (int j = 0; j < this.edges.size(); j++) {
                 resultado += matriz[i][j] + "\t";
@@ -446,9 +463,9 @@ public class Grafo {
         System.out.println(resultado);
     }
 
-    public void imprimeMatrizAdjacencia() {
+    public void imprimeMatrizAdjacencia(Grafo grafo) {
         String resultado = "";
-        int matriz[][] = this.getMatrizAdjacencia();
+        int matriz[][] = this.getMatrizAdjacencia(grafo);
         for (int i = 0; i < this.nodes.size(); i++) {
             for (int j = 0; j < this.nodes.size(); j++) {
                 resultado += matriz[i][j] + "\t";
@@ -479,7 +496,7 @@ public class Grafo {
                 }
             }
             edgesSource = newEdgesSource;
-        }        
+        }
         return false;
     }
 
