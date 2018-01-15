@@ -1,8 +1,13 @@
 package modelo;
 
+import br.com.davesmartins.graphviewlib.model.No;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+import thirdParty.ComparaVertice;
 
 public class Grafo {
 
@@ -564,6 +569,54 @@ public class Grafo {
             }
         }
         return false;
+    }
+
+    public ArrayList<Edge> getArestasDoNoAtual(String no) {
+        ArrayList<Edge> arestasDoNoAtual = new ArrayList();
+        if (this.getEdgedefault().equals("undirected")) {
+            this.getEdges().stream().filter((aresta) -> (aresta.getOrigem().getId().equals(no) || aresta.getDestino().getId().equals(no))).forEachOrdered((aresta) -> {
+                arestasDoNoAtual.add(aresta);
+            });
+        } else {
+            this.getEdges().stream().filter((aresta) -> (aresta.getOrigem().getId().equals(no))).forEachOrdered((aresta) -> {
+                arestasDoNoAtual.add(aresta);
+            });
+        }
+        return arestasDoNoAtual;
+    }
+
+    public boolean possuiElementoRepetido(List<String> nosVisitados) {
+        ArrayList<String> novaLista = new ArrayList(new HashSet(nosVisitados));
+        return novaLista.size() < nosVisitados.size();
+    }
+
+    public ArrayList<String> gerarVerticesAdjacentes(String no) {
+        ArrayList<Edge> arestasDoNo = this.getArestasDoNoAtual(no);
+        ArrayList<Node> nosAdjacentes = new ArrayList();
+        ArrayList<String> nomeNosAdjacentes = new ArrayList();
+
+        if (this.getEdgedefault().equals("directed")) {
+            arestasDoNo.forEach((arestaAtual) -> {
+                nosAdjacentes.add(arestaAtual.getDestino());
+            });
+        } else {
+            arestasDoNo.stream().map((arestaAtual) -> {
+                nosAdjacentes.add(arestaAtual.getDestino());
+                return arestaAtual;
+            }).filter((arestaAtual) -> (no.equals(arestaAtual.getOrigem().getId()) || no.equals(arestaAtual.getDestino().getId()))).forEachOrdered((arestaAtual) -> {
+                nosAdjacentes.add(arestaAtual.getOrigem());
+            });
+        }
+        Set<Node> semRepeticoes = new TreeSet(new ComparaVertice());
+        semRepeticoes.addAll(nosAdjacentes);
+        nosAdjacentes.clear();
+        semRepeticoes.stream().filter((noAtual) -> (!noAtual.getId().equals(no))).forEachOrdered((noAtual) -> {
+            nosAdjacentes.add(noAtual);
+        });
+        nosAdjacentes.forEach((noAtual) -> {
+            nomeNosAdjacentes.add(noAtual.getId());
+        });
+        return nomeNosAdjacentes;
     }
 
 }
