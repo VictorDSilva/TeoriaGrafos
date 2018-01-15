@@ -404,13 +404,13 @@ public class Grafo {
         HashMap<Node, ArrayList<Node>> nodes = new HashMap<>();
 
         for (Node n1 : this.nodes) {
-            ArrayList<Node> verticesAdjacentes = new ArrayList<>();
+            ArrayList<Node> nodesAdjacentes = new ArrayList<>();
             for (Node n2 : this.nodes) {
                 if (NodeAdjacenteLista(n1.getId(), n2.getId())) {
-                    verticesAdjacentes.add(n2);
+                    nodesAdjacentes.add(n2);
                 }
             }
-            nodes.put(n1, verticesAdjacentes);
+            nodes.put(n1, nodesAdjacentes);
         }
 
         Set<Node> keys = nodes.keySet();
@@ -456,6 +456,97 @@ public class Grafo {
             resultado += "\n";
         }
         System.out.println(resultado);
+    }
+
+    public boolean caminho(String inicio, String destino) {
+        ArrayList<Edge> edgesSource = new ArrayList<>();
+
+        for (Edge aresta : this.edges) {
+            if (aresta.getDestino() == buscaNode(inicio) && buscaNode(inicio) != aresta.getDestino()) {
+                edgesSource.add(aresta);
+            }
+        }
+
+        while (edgesSource.size() >= 1) {
+            ArrayList<Edge> newEdgesSource = new ArrayList<>();
+            for (Edge edgesSource1 : edgesSource) {
+                for (Edge aresta : this.edges) {
+                    if (edgesSource1.getDestino() == aresta.getOrigem() && edgesSource1.getDestino() != buscaNode(inicio)) {
+                        newEdgesSource.add(aresta);
+                    } else if (edgesSource1.getDestino() == buscaNode(destino)) {
+                        return true;
+                    }
+                }
+            }
+            edgesSource = newEdgesSource;
+        }        
+        return false;
+    }
+
+    public boolean cadeia(String inicio, String destino) {
+        ArrayList<Edge> edgesFound = new ArrayList<>();
+        ArrayList<Node> nodesFound = new ArrayList<>();
+        ArrayList<Node> newNodesFound = new ArrayList<>();
+
+        for (Edge aresta : edges) {
+            if (!nodesFound.contains(aresta.getOrigem()) && !nodesFound.contains(aresta.getDestino())) {
+                if (aresta.getOrigem() == buscaNode(inicio)) {
+                    edgesFound.add(aresta);
+                    newNodesFound.add(aresta.getDestino());
+                }
+                if (aresta.getDestino() == buscaNode(inicio)) {
+                    edgesFound.add(aresta);
+                    newNodesFound.add(aresta.getOrigem());
+                }
+            }
+        }
+
+        nodesFound.add(buscaNode(inicio));
+        for (Node n : newNodesFound) {
+            if (!nodesFound.contains(n)) {
+                nodesFound.add(n);
+            }
+        }
+
+        while (edgesFound.size() >= 1) {
+            ArrayList<Edge> newEdgesFound = new ArrayList<>();
+            newNodesFound = new ArrayList<>();
+            int nodesFoundSize = nodesFound.size();
+            for (Edge arestaFound : edgesFound) {
+                for (Edge aresta : edges) {
+                    if (arestaFound.getDestino() == buscaNode(destino) || arestaFound.getOrigem() == buscaNode(destino)) {
+                        return true;
+                    }
+                    if (arestaFound.getDestino() == aresta.getOrigem()) {
+                        newEdgesFound.add(aresta);
+                        newNodesFound.add(aresta.getDestino());
+                    }
+                    if (arestaFound.getDestino() == aresta.getDestino()) {
+                        newEdgesFound.add(aresta);
+                        newNodesFound.add(aresta.getOrigem());
+                    }
+                    if (arestaFound.getOrigem() == aresta.getOrigem()) {
+                        newEdgesFound.add(aresta);
+                        newNodesFound.add(aresta.getDestino());
+                    }
+                    if (arestaFound.getOrigem() == aresta.getDestino()) {
+                        newEdgesFound.add(aresta);
+                        newNodesFound.add(aresta.getOrigem());
+                    }
+
+                }
+            }
+            for (Node n : newNodesFound) {
+                if (!nodesFound.contains(n)) {
+                    nodesFound.add(n);
+                }
+            }
+            edgesFound = newEdgesFound;
+            if (nodesFoundSize == nodesFound.size()) {
+                return false;
+            }
+        }
+        return false;
     }
 
 }

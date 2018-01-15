@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,8 +42,10 @@ public abstract class GeradorXml {
 
             grafo.getEdges().forEach((edge) -> {
                 if (edge.getPeso() != 0) {
-                    gravarArquivo.printf("      <edge id='" + edge.getId() + "' source='" + edge.getOrigem().getId() + "' target='" + edge.getDestino().getId() + "'/>\n");
+                    gravarArquivo.printf("      <edge id='" + edge.getId() + "' source='" + edge.getOrigem().getId() + "' target='" + edge.getDestino().getId() + "'>\n");
                     gravarArquivo.printf("          <data key= 'd1'>" + edge.getPeso() + "</data>\n");
+                    gravarArquivo.printf("      </edge>\n");
+
                 } else {
                     gravarArquivo.printf("      <edge id='" + edge.getId() + "' source='" + edge.getOrigem().getId() + "' target='" + edge.getDestino().getId() + "'/>\n");
                 }
@@ -71,37 +74,61 @@ public abstract class GeradorXml {
 
             Document doc = builder.parse(nomeArquivo + ".xml");
 
-            NodeList listaGraph = doc.getElementsByTagName("graph");
+            NodeList listaGrafo = doc.getElementsByTagName("graph");
             NodeList listaNode = doc.getElementsByTagName("node");
             NodeList listaEdge = doc.getElementsByTagName("edge");
+            NodeList listaData = doc.getElementsByTagName("data");
 
             int tamanhoListaNode = listaNode.getLength();
             int tamanhoListaEdge = listaEdge.getLength();
+            int tamanhoListaData = listaData.getLength();
 
-            org.w3c.dom.Node noGraph = listaGraph.item(0);
+            org.w3c.dom.Node noGrafo = listaGrafo.item(0);
 
-            if (noGraph.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
-                Element elementoGraph = (Element) noGraph;
-                String id = elementoGraph.getAttribute("id");
-                String edgeDefault = elementoGraph.getAttribute("edgedefault");
+            if (noGrafo.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                Element elementoGrafo = (Element) noGrafo;
+                String id = elementoGrafo.getAttribute("id");
+                String edgeDefault = elementoGrafo.getAttribute("edgedefault");
 
                 grafo = new Grafo(id, edgeDefault);
             }
 
+            ArrayList<org.w3c.dom.Node> listaDataEdge = new ArrayList<>();
+            ArrayList<org.w3c.dom.Node> listaDataNode = new ArrayList<>();
+            for (int i = 0; i < tamanhoListaData; i++) {
+                org.w3c.dom.Node dataNode = listaData.item(i);
+                if (dataNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
+                    Element elemento = (Element) dataNode;
+                    if (elemento.getAttribute("key").equals("d0")) {
+                        listaDataNode.add(dataNode);
+                    } else if (elemento.getAttribute("key").equals("d1")) {
+                        listaDataEdge.add(dataNode);
+                    }
+                }
+            }
+
             for (int i = 0; i < tamanhoListaNode; i++) {
                 org.w3c.dom.Node noNode = listaNode.item(i);
+                Node no = null;
 
                 if (noNode.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                     Element elementoNode = (Element) noNode;
                     String id = elementoNode.getAttribute("id");
 
-                    Node no = new Node(id);
+                    if (!listaDataNode.isEmpty()) {
+                        String label = listaDataNode.get(i).getTextContent();
+                        no = new Node(id, label);
+                    } else {
+                        no = new Node(id);
+                    }
                     grafo.addNode(no);
+                    System.out.println("Valor nó: " + no.getLabel());
                 }
             }
 
             for (int i = 0; i < tamanhoListaEdge; i++) {
                 org.w3c.dom.Node noEdge = listaEdge.item(i);
+                Edge aresta = null;
 
                 if (noEdge.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                     Element elementoEdge = (Element) noEdge;
@@ -109,9 +136,14 @@ public abstract class GeradorXml {
                     String source = elementoEdge.getAttribute("source");
                     String target = elementoEdge.getAttribute("target");
 
-                    Edge aresta = new Edge(id, grafo.buscaNode(source), grafo.buscaNode(target));
+                    if (!listaDataEdge.isEmpty()) {
+                        String valor = listaDataEdge.get(i).getTextContent();
+                        aresta = new Edge(id, grafo.buscaNode(source), grafo.buscaNode(target), valor);
+                    } else {
+                        aresta = new Edge(id, grafo.buscaNode(source), grafo.buscaNode(target));
+                    }
                     grafo.addEdge(aresta);
-
+                    System.out.println("Valor aresta: " + aresta.getPeso());
                 }
             }
         } catch (ParserConfigurationException | SAXException | IOException ex) {

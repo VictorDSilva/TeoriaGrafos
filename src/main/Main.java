@@ -236,6 +236,8 @@ public class Main {
         System.out.println("11 - Ver Matrizes Incidencia");
         System.out.println("12 - Ver Matrizes Adjascencia");
         System.out.println("13 - Ver Lista de Adjascencia");
+        System.out.println("14 - Ver Sé há Caminho");
+        System.out.println("15 - Ver Se há cadeia");
         System.out.println("************************");
         System.out.print("Escolha uma opção: ");
         opt2 = ler.next();
@@ -305,6 +307,26 @@ public class Main {
             case "13":
                 //ver lista de adjacencia dos vertices           
                 grafo.listaAdjacencias();
+                break;
+            case "14":
+                System.out.print("\nEscolha um vertice de Origem: ");
+                String origem = ler.next();
+
+                System.out.print("Escolha um vertice de Destino: ");
+                String destino = ler.next();
+                if (grafo.caminho(origem, destino)) {
+                    System.out.println("Há caminho!");
+                }
+                break;
+            case "15":
+                System.out.print("\nEscolha um vertice de Origem: ");
+                origem = ler.next();
+
+                System.out.print("Escolha um vertice de Destino: ");
+                destino = ler.next();
+                if (grafo.cadeia(origem, destino)) {
+                    System.out.println("Há caminho");
+                }
                 break;
         }
     }
@@ -402,7 +424,7 @@ public class Main {
                     case "5":
                         if (!grafoXml.getNodes().isEmpty()) {
                             Dijkstra dijkstra = new Dijkstra(grafoXml);
-                            
+
                             System.out.println("Escolha um vertice para informar menor caminho");
                             System.out.println(grafoXml.listarNodes());
 

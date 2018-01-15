@@ -23,7 +23,6 @@ public class Node {
         this.label = label;
     }
         
-
     public String getId() {
         return id;
     }
@@ -52,6 +51,4 @@ public class Node {
         this.label = label;
     }
     
-    
-
 }
