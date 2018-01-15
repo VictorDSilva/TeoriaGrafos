@@ -1,4 +1,4 @@
-package thirdyparty;
+package thirdParty;
 
 import br.com.davesmartins.graphviewlib.ViewGraph;
 import br.com.davesmartins.graphviewlib.erro.EGraphViewExcpetion;

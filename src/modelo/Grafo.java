@@ -150,7 +150,7 @@ public class Grafo {
     public String listarEdges() {
         String lista = "";
         for (Edge aresta : this.getEdges()) {
-            lista += "Edge: " + aresta.getId() + "\n";
+            lista += "Edge: " + aresta.getId() + " peso: " + aresta.getPeso() + "\n";
         }
         return lista;
     }
@@ -382,11 +382,11 @@ public class Grafo {
                             if (this.getEdges().get(k).getDirected()) {
                                 if (this.edges.get(k).getOrigem().getId().equals(this.getNodes().get(i).getId())
                                         && this.edges.get(k).getDestino().getId().equals(this.getNodes().get(j).getId())) {
-                                    matrizAdjacencia[i][j] = 1;
+                                    matrizAdjacencia[i][j] = this.edges.get(k).getPeso();
 
                                 }
                             } else {
-                                matrizAdjacencia[i][j] = 1;
+                                matrizAdjacencia[i][j] = this.edges.get(j).getPeso();
 
                             }
                         }

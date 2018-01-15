@@ -13,8 +13,8 @@ import algoritmos.Prim;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 //PACOTES EXTERNOS
-import thirdyparty.GeradorImagem;
-import thirdyparty.GeradorXml;
+import thirdParty.GeradorImagem;
+import thirdParty.GeradorXml;
 
 public class Main {
 

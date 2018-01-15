@@ -28,6 +28,13 @@ public class Edge {
         this.directed = directed;
     }
 
+    public Edge(String id, Node origem, Node destino, String peso) {
+        this.id = id;
+        this.origem = origem;
+        this.destino = destino;
+        this.peso = Integer.parseInt(peso);
+    }
+
     public Edge(Node origem, Node destino, String peso) {
         this.id = origem.getId() + destino.getId();
         this.origem = origem;
