@@ -1,7 +1,7 @@
 package modelo;
 
 import java.util.ArrayList;
-import thirdyparty.Chaves;
+import thirdParty.Chaves;
 
 public class Graphml {
 

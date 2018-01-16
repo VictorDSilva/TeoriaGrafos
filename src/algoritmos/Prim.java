@@ -5,7 +5,7 @@ import java.util.Collections;
 import modelo.Edge;
 import modelo.Grafo;
 import modelo.Node;
-import thirdyparty.ComparaAresta;
+import thirdParty.ComparaAresta;
 
 public class Prim {
 

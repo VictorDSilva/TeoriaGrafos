@@ -5,7 +5,7 @@ import java.util.Collections;
 import modelo.Grafo;
 import modelo.Edge;
 import modelo.Node;
-import thirdyparty.ComparaAresta;
+import thirdParty.ComparaAresta;
 
 public class Kruskal {
 

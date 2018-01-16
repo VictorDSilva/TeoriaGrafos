@@ -1,4 +1,4 @@
-package thirdyparty;
+package thirdParty;
 
 import java.util.Comparator;
 import modelo.Edge;

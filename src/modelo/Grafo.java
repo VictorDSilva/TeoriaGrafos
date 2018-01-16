@@ -1,6 +1,5 @@
 package modelo;
 
-import br.com.davesmartins.graphviewlib.model.No;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
